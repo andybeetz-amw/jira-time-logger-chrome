@@ -24,7 +24,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 ### P0 — Repo hygiene + security
 - [x] P0.1 Commit `MIGRATION-PLAN.md` and this file. *Done when:* both tracked, tree clean.
 - [x] P0.2 `git rm` `jira-time-logger-chrome.crx` and `.pem` (no history purge yet). *Done when:* neither in `git ls-files`.
-- [ ] P0.3 Update `.gitignore` (`dist/`, `node_modules/`, `*.zip`, `*.crx`, `*.pem`, `.web-ext-artifacts/`). *Done when:* entries present.
+- [x] P0.3 Update `.gitignore` (`dist/`, `node_modules/`, `*.zip`, `*.crx`, `*.pem`, `.web-ext-artifacts/`). *Done when:* entries present.
 - [ ] P0.4 Delete `src/js/jquery.base64.min.js` after grep proves zero references. *Done when:* grep empty, popup loads.
 - [ ] P0.5 Add the used Gumby grid/button/form CSS subset to `src/css/app.css` (additive; gumby still present). *Done when:* popup looks identical with gumby.css link removed locally.
 - [ ] P0.6 Replace the 7 entypo icons with an inline SVG sprite. *Done when:* icons render without the font.
