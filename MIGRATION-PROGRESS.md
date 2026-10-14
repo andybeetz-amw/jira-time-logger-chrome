@@ -46,7 +46,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - [ ] P2.1 *(split — see P2.1a–h)* Convert AMD modules to ESM, bundled by esbuild; page still MV2.
   Constraint: esbuild cannot bundle AMD `define()` files, and each commit must leave `src/` loadable, so the
   bundler goes in first with a bridge for not-yet-converted modules, then modules convert leaf-first.
-  - [ ] P2.1a Bundle the 3 entry points (`index.js`, `ui-index.js`, `ui-config.js`) with esbuild into `dist/js/`, using a
+  - [x] P2.1a Bundle the 3 entry points (`index.js`, `ui-index.js`, `ui-config.js`) with esbuild into `dist/js/`, using a
     small build-time plugin that resolves legacy AMD modules by name from `src/js` (baseUrl) and stubs `jquery`
     to the global `$`; `json!/config/config.json` handled in the plugin. `src/index.html`, `src/config.html`
     and `manifest.json` keep working because `build.mjs` emits the same filenames; RequireJS no longer loaded in `dist/`.
@@ -101,6 +101,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - [ ] P7.3 **User-run:** CWS + Edge Add-ons submission.
 
 ## Deviations from the plan
+- P2.1a: `src/` is no longer loadable directly (RequireJS tags removed); only the built `dist/` loads. Already the load target since P1.2. `index.js` now sets `appInstance`/`configInstance` on `globalThis` (IIFE bundle) until P2.6 removes `getBackgroundPage()`.
 - P0.10 deferred: the repo (`Lilchef/jira-time-logger-chrome`) is not owned by the migrating user, so the history purge
   and force-push are left to the repo owner. The `.pem` private key remains in history until they decide. Does not block P1+.
 
@@ -112,3 +113,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-14 — P1.4 — 79f9e2d — eslint flat config; vendored libs + tests/ ignored; legacy style rules downgraded to warnings (7 warnings, 0 errors)
 - 2026-10-14 — P1.5 — 9c55077 — web-ext devDep; npm run dist builds then zips dist/ to .web-ext-artifacts/ (gitignored); ZIP extracted and loaded unpacked by user, works; npm run dev verified on Edge with --chromium-binary (no Chrome on dev machine)
 - 2026-10-14 — P1.6 — 6288738 — .github/workflows/ci.yml; no test step until P6.1; first CI run failed at upload (hidden dir); fixed in ebc1878
+- 2026-10-14 — P2.1a — b522a4b — esbuild bundles 3 entries via AMD bridge plugin in build.mjs; require.js/jquery tags dropped from html/manifest; verified loaded by user
