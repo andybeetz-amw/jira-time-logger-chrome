@@ -22,3 +22,4 @@ jobs:
           name: extension-zip
           path: .web-ext-artifacts/*.zip
           if-no-files-found: error
+          include-hidden-files: true
