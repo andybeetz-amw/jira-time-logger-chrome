@@ -154,7 +154,7 @@ Each phase is independently loadable (`chrome://extensions` → Load unpacked) a
 
 ### P0 — Repo hygiene + security (S, no functional risk)
 - `git rm jira-time-logger-chrome.crx jira-time-logger-chrome.pem`; purge history with
-  `git filter-repo --invert-paths --path jira-time-logger-chrome.pem --path jira-time-logger.crx`
+  `git filter-repo --invert-paths --path jira-time-logger-chrome.pem --path jira-time-logger-chrome.crx`
   (force-push; collaborators re-clone). Announce before pushing.
 - `.gitignore`: add `dist/`, `node_modules/`, `*.zip`, `*.crx`, `*.pem`, `.web-ext-artifacts/`.
 - Delete the vendored demo tree `src/gumby/` (1.1 MB, 73 files) and `src/js/modernizr.min.js`
