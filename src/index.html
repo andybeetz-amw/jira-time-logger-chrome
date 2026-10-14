@@ -6,6 +6,15 @@
     <script type="text/javascript" src="js/modernizr.min.js"></script>
 </head>
     <body>
+        <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+            <symbol id="icon-cancel" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+            <symbol id="icon-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
+            <symbol id="icon-cc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10.5 9.3a3.2 3.2 0 1 0 0 5.4M15.8 9.3a3.2 3.2 0 1 0 0 5.4"/></symbol>
+            <symbol id="icon-cc-sa" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 12a3.5 3.5 0 1 1-1.2-2.6M15.7 7.8v2.4h-2.4"/></symbol>
+            <symbol id="icon-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="7" /><circle cx="12" cy="12" r="9.2" stroke-width="2.6" stroke-dasharray="2.4 2.3"/></symbol>
+            <symbol id="icon-hourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3v4l5 5 5-5V3M7 21v-4l5-5 5 5v4"/></symbol>
+            <symbol id="icon-tools" viewBox="0 0 24 24"><path d="M4 20L14 10M20 20L10 10M13 5l4 4M4 8l4-4M8 4l4 4"/></symbol>
+        </svg>
         <div class="row">
             <div class="one column">
                 &nbsp;
@@ -40,7 +49,8 @@
                                 <input type="text" id="timeManual" name="time" class="text input" placeholder="e.g. '1h 30m'" />
                             </div>
                             <div class="two columns">
-                                <div class="small rounded pretty danger btn icon-left icon-cancel">
+                                <div class="small rounded pretty danger btn icon-left">
+                                    <svg class="icon" aria-hidden="true"><use href="#icon-cancel"/></svg>
                                     <a href="#" id="clearTimeButton">Reset</a>
                                 </div>
                             </div>
@@ -57,12 +67,14 @@
             </div>
             <div class="row">
                 <div class="three columns">
-                    <div class="small rounded pretty danger btn icon-left icon-cancel">
+                    <div class="small rounded pretty danger btn icon-left">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-cancel"/></svg>
                         <a href="#" id="resetFormButton">Reset form</a>
                     </div>
                 </div>
                 <div class="three columns text-right">
-                    <div class="medium rounded pretty success btn icon-left icon-hourglass">
+                    <div class="medium rounded pretty success btn icon-left">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-hourglass"/></svg>
                         <a href="#" id="logTimeButton">Log time</a>
                     </div>
                 </div>
@@ -73,7 +85,8 @@
                 <div id='loggedTotalDisplay'>
                     Logged = <span id='loggedTotal'>0m</span>
                 </div>
-                <div class="small rounded pretty danger btn icon-left icon-cancel">
+                <div class="small rounded pretty danger btn icon-left">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-cancel"/></svg>
                     <a href="#" id="resetLoggedTotalButton">Reset</a>
                 </div>
             </div>
@@ -90,14 +103,16 @@
         </div>
         <div class="row" id="footer">
             <div class="three columns">
-                <i class="icon-cc" title="Creative Commons"></i> <i class="icon-cc-sa" title="Share-Alike licensed"></i>
+                <svg class="icon" role="img"><title>Creative Commons</title><use href="#icon-cc"/></svg> <svg class="icon" role="img"><title>Share-Alike licensed</title><use href="#icon-cc-sa"/></svg>
                 &copy; Aaron Baker, <span id="copyYear">2013</span>. JIRA &copy; Atlassian, Inc.
             </div>
             <div class="three columns text-right">
-                <div class="small rounded pretty warning btn icon-left icon-cog">
+                <div class="small rounded pretty warning btn icon-left">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-cog"/></svg>
                     <a href="#" id="reconfigureButton">Reconfigure</a>
                 </div>
-                <div class="small rounded pretty primary btn icon-left icon-tools">
+                <div class="small rounded pretty primary btn icon-left">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-tools"/></svg>
                     <a href="#" id="bugButton">Report bug</a>
                 </div>
             </div>
