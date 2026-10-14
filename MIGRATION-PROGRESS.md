@@ -51,7 +51,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
     to the global `$`; `json!/config/config.json` handled in the plugin. `src/index.html`, `src/config.html`
     and `manifest.json` keep working because `build.mjs` emits the same filenames; RequireJS no longer loaded in `dist/`.
     *Done when:* `npm run dist` ZIP loads unpacked (popup, config page, background all work) with no `require.js` in `dist/`.
-  - [ ] P2.1b ESM-convert no-dependency leaves: `Logger`, `JiraConstants`, `StopwatchTime`, `AppConstants`, `ConfigConstants`, `ActivityLog`. *Done when:* build + lint pass, popup loads.
+  - [x] P2.1b ESM-convert no-dependency leaves: `Logger`, `JiraConstants`, `StopwatchTime`, `AppConstants`, `ConfigConstants`, `ActivityLog`. *Done when:* build + lint pass, popup loads.
   - [ ] P2.1c ESM-convert `Stopwatch`, `Container/Abstract`, `Storage/Abstract`, `Container/ChromeExt`, `Storage/ChromeExt`.
   - [ ] P2.1d ESM-convert `Container/Factory`, `Storage/Factory` (keep the dynamic `require` for now; P2.2 replaces it) — may need to be combined with P2.2 if the bundler can't resolve them; decide then.
   - [ ] P2.1e ESM-convert `Event/Dispatcher/*` and `Event/Listener/Abstract`.
@@ -114,3 +114,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-14 — P1.5 — 9c55077 — web-ext devDep; npm run dist builds then zips dist/ to .web-ext-artifacts/ (gitignored); ZIP extracted and loaded unpacked by user, works; npm run dev verified on Edge with --chromium-binary (no Chrome on dev machine)
 - 2026-10-14 — P1.6 — 6288738 — .github/workflows/ci.yml; no test step until P6.1; first CI run failed at upload (hidden dir); fixed in ebc1878
 - 2026-10-14 — P2.1a — b522a4b — esbuild bundles 3 entries via AMD bridge plugin in build.mjs; require.js/jquery tags dropped from html/manifest; verified loaded by user
+- 2026-10-14 — P2.1b — de1e878 — Logger/JiraConstants/StopwatchTime/AppConstants/ConfigConstants/ActivityLog now ESM (IIFE body + export default); bridge passes ESM through; eslint sourceType module; verified popup/config/issue lookup (log-time not exercised); Jira Cloud needs an API token, not a password
