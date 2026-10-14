@@ -55,7 +55,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
   - [x] P2.1c ESM-convert `Stopwatch`, `Container/Abstract`, `Storage/Abstract`, `Container/ChromeExt`, `Storage/ChromeExt`.
   - [x] P2.1d ESM-convert `Container/Factory`, `Storage/Factory` (keep the dynamic `require` for now; P2.2 replaces it) — may need to be combined with P2.2 if the bundler can't resolve them; decide then.
   - [x] P2.1e ESM-convert `Event/Dispatcher/*` and `Event/Listener/Abstract`.
-  - [ ] P2.1f ESM-convert `Config`, `Reminder`, `Jira` (`json!` → JSON import).
+  - [x] P2.1f ESM-convert `Config`, `Reminder`, `Jira` (`json!` → JSON import).
   - [ ] P2.1g ESM-convert `View/Config`, `View/Index`, `Event/Listener/Config`, `Event/Listener/Index`, `App`.
   - [ ] P2.1h ESM-convert the 3 entry points; remove the AMD bridge plugin from `build.mjs`. *Done when:* no `define(` or `require(` left in `src/js` outside RequireJS itself and its plugins.
 - [ ] P2.2 Replace `Container/Factory.js` / `Storage/Factory.js` dynamic requires with static maps.
@@ -118,3 +118,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-14 — P2.1c — 0c0ae2a — Stopwatch, Container/Abstract+ChromeExt, Storage/Abstract+ChromeExt now ESM with real imports; verified stopwatch ticks, config persists, issue lookup works; known/expected console error "listener indicated an asynchronous response..." (unconditional return true in onMessage, fixed in P2.5)
 - 2026-10-14 — P2.1d — b613723 — Container/Factory and Storage/Factory now ESM; dynamic require replaced by static `Factory.TYPES` map (so P2.2 is mostly done; revisit when reaching it); build + lint pass, verified loaded by user
 - 2026-10-14 — P2.1e — 41984c4 — Event/Dispatcher/{Abstract,Config,Index} and Event/Listener/Abstract now ESM; build + lint pass, verified loaded by user
+- 2026-10-14 — P2.1f — 76eced6 — Config, Reminder, Jira now ESM; config.json imported directly; build + lint pass (new warning: Config's StorageAbstract import is unused, was an unreported unused AMD param); browser load not yet verified by user
