@@ -30,7 +30,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - [x] P0.6 Replace the 7 entypo icons with an inline SVG sprite. *Done when:* icons render without the font.
 - [x] P0.7 Drop `gumby.css`/Gumby script tags from `index.html` and `config.html`; system font stack. *Done when:* no remote URL or `@import` in `src/`.
 - [x] P0.8 Delete `src/gumby/` and `src/js/modernizr.min.js`. *Done when:* popup + config page still work.
-- [ ] P0.9 Replace the `jqueryColor` `.animate` highlight (`View/Index.js:154-158`) with a CSS transition; delete `jquery.color.min.js` and its dep at `:11`. *Done when:* log-entry highlight still fades.
+- [x] P0.9 Replace the `jqueryColor` `.animate` highlight (`View/Index.js:154-158`) with a CSS transition; delete `jquery.color.min.js` and its dep at `:11`. *Done when:* log-entry highlight still fades.
 - [ ] P0.10 **User-run:** purge `.pem`/`.crx` from history with `git filter-repo`, force-push, announce to collaborators. *Done when:* user confirms.
 
 ### P1 — Build + packaging

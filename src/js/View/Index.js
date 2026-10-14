@@ -8,7 +8,7 @@
  */
 
 define([
-    'jqueryColor',
+    'jquery',
     'Container/Factory',
     'ActivityLog',
     'JiraConstants',
@@ -153,9 +153,9 @@ define([
         $('#userLogContainer').prepend(userLog).scrollTop(0);
         if (animate) {
             var colour = Index.AL_COLOUR_MAP[level];
-            userLog.css({backgroundColor: colour})
-                    .show()
-                    .animate({backgroundColor: 'none'}, 1500);
+            userLog.css({backgroundColor: colour});
+            userLog[0].offsetWidth; // force reflow so the transition starts from the colour
+            userLog.css({transition: 'background-color 1.5s', backgroundColor: 'transparent'});
         }
     };
 

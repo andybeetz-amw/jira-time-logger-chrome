@@ -11,14 +11,7 @@ require.config({
    baseUrl: "js",
    paths: {
        jquery: "jquery.min",
-       jqueryColor: "jquery.color.min",
        text: "require-plugin/text",
        json: "require-plugin/json"
-   },
-   shim: {
-       jqueryColor: {
-            exports: "$",
-            deps: ['jquery']
-       }
    }
 });
