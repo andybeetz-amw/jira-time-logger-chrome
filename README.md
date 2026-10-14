@@ -35,6 +35,15 @@ Unfortunately the Windows version of Chrome does not allow extensions to be inst
 * In the file browser select the 'src' folder of the 'jira-time-logger-chrome' directory and click 'Open'
 
 
+## Development ##
+Requires Node 20+ (see `.nvmrc`).
+* `npm ci` to install dependencies
+* `npm run build` copies `src/` to `dist/`
+* `npm run lint` runs eslint
+* `npm run dist` builds and zips `dist/` into `.web-ext-artifacts/`
+* `npm run dev` launches a browser with `dist/` loaded and reloads it when `dist/` changes. Run `npm run build` first, and again after editing `src/`.
+    + If you have no Chrome installed, point it at Edge: `npm run dev -- --chromium-binary "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"`
+
 ## Usage ##
 You should see the time logger icon on the top-right of Chrome, click it to show the logger (and click anywhere else to hide it).
 If you don't see it try hovering over the right-most edge of the URL bar until the cursor changes to a left-right arrow then click and drag it left to, hopefully, reveal the time logger icon.
