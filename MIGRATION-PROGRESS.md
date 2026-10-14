@@ -37,7 +37,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - [x] P1.1 Add `package.json` + `package-lock.json` with no scripts beyond placeholders; `.nvmrc`/engines.
 - [x] P1.2 Add esbuild; `npm run build` copies `src/` static files to `dist/` unchanged (still MV2, still loads).
 - [x] P1.3 Add icon generation with `sharp` (16/32/48 from the 128px logo); commit generated icons.
-- [ ] P1.4 Add eslint with a minimal config; `npm run lint` passes.
+- [x] P1.4 Add eslint with a minimal config; `npm run lint` passes.
 - [ ] P1.5 Add `web-ext` + `npm run dist` producing a ZIP.
 - [ ] P1.6 Add `.github/workflows/ci.yml` (`npm ci` → lint → build → upload ZIP).
 
@@ -95,3 +95,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-14 — P1.1 — 5b5dd55 — package.json (placeholder scripts), lockfile, .nvmrc (Node 20)
 - 2026-10-14 — P1.2 — d897e92 — esbuild devDep; scripts/build.mjs copies src/ to dist/ (no bundling yet)
 - 2026-10-14 — P1.3 — 761194a — sharp devDep; scripts/make-icons.mjs (npm run icons); icon16/32/48/128.png committed, manifest not yet wired
+- 2026-10-14 — P1.4 — 79f9e2d — eslint flat config; vendored libs + tests/ ignored; legacy style rules downgraded to warnings (7 warnings, 0 errors)
