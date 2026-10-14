@@ -9,10 +9,8 @@
 
 /*
  * These variables MUST be global (albeit within the extension)
- * so the popup can access them via chrome.extension.getBackgroundPage().appInstance
+ * so the popup can access them (set on globalThis: the bundle is an IIFE) via chrome.extension.getBackgroundPage().appInstance
  */
-var appInstance, configInstance;
-
 require([
     'jquery',
     'Config',
@@ -29,8 +27,8 @@ require([
     containerFactory
 ) {
     try {
-        appInstance = app;
-        configInstance = config;
+        globalThis.appInstance = app;
+        globalThis.configInstance = config;
         var forContext = 'index';
         containerFactory.get().registerCustomEventListener(ConfigConstants.EVENT_INITIALISED+'_'+forContext, function()
         {

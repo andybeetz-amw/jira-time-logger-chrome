@@ -9,8 +9,6 @@
     "background": {
         "persistent": true,
         "scripts": [
-            "js/require.js",
-            "js/require-setup.js",
             "js/index.js"
         ]
     },
