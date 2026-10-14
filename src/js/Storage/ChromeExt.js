@@ -7,11 +7,10 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'Storage/Abstract'
-], function(
-    Abstract
-) {
+import Abstract from './Abstract.js';
+
+const ChromeExtModule = (function()
+{
 
     /**
      * ChromeExt class
@@ -66,4 +65,6 @@ define([
     };
 
     return new ChromeExt();
-});
+})();
+
+export default ChromeExtModule;

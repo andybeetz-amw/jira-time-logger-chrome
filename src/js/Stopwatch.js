@@ -7,11 +7,10 @@
  * @copyright Aaron Baker 2013
  */
 
-define([
-   'StopwatchTime'
-], function(
-    StopwatchTime
-) {
+import StopwatchTime from './StopwatchTime.js';
+
+const StopwatchModule = (function()
+{
 
     /**
      * Stopwatch class
@@ -340,4 +339,6 @@ define([
     };
 
     return new Stopwatch();
-});
+})();
+
+export default StopwatchModule;

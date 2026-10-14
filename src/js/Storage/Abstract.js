@@ -7,7 +7,7 @@
  * @copyright Aaron Baker 2014
  */
 
-define([], function()
+const AbstractModule = (function()
 {
 
     /**
@@ -49,4 +49,6 @@ define([], function()
 
     // Child classes should return a singleton here
     return Abstract;
-});
+})();
+
+export default AbstractModule;
