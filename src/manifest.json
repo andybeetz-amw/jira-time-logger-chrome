@@ -24,7 +24,6 @@
     "permissions": [
         "storage",
         "notifications",
-        "https://*.atlassian.net/",
-        "http://fonts.googleapis.com/"
+        "https://*.atlassian.net/"
     ]
 }
