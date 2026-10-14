@@ -39,7 +39,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - [x] P1.3 Add icon generation with `sharp` (16/32/48 from the 128px logo); commit generated icons.
 - [x] P1.4 Add eslint with a minimal config; `npm run lint` passes.
 - [x] P1.5 Add `web-ext` + `npm run dist` producing a ZIP.
-- [ ] P1.6 Add `.github/workflows/ci.yml` (`npm ci` → lint → build → upload ZIP).
+- [x] P1.6 Add `.github/workflows/ci.yml` (`npm ci` → lint → build → upload ZIP).
 
 ### P2 — MV3 shell + RPC core
 *(Split into steps when P1 is done — needs a fresh look at the code then. Outline:)*
@@ -97,3 +97,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-14 — P1.3 — 761194a — sharp devDep; scripts/make-icons.mjs (npm run icons); icon16/32/48/128.png committed, manifest not yet wired
 - 2026-10-14 — P1.4 — 79f9e2d — eslint flat config; vendored libs + tests/ ignored; legacy style rules downgraded to warnings (7 warnings, 0 errors)
 - 2026-10-14 — P1.5 — 9c55077 — web-ext devDep; npm run dist builds then zips dist/ to .web-ext-artifacts/ (gitignored); ZIP extracted and loaded unpacked by user, works; npm run dev untested
+- 2026-10-14 — P1.6 — 6288738 — .github/workflows/ci.yml; no test step until P6.1; workflow not yet run on GitHub (needs push)
