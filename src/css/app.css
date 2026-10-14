@@ -1,3 +1,80 @@
+/*
+ * Subset of Gumby 2.0 (http://www.gumbyframework.com/) used by index.html and config.html,
+ * ported so gumby.css can be dropped. Icon glyphs are handled separately (inline SVG sprite).
+ */
+
+/* Reset + base */
+html, body, div, span, h3, h4, p, a, i, sup, ul, li, form, label { margin: 0; padding: 0; border: 0; font: inherit; font-size: 100%; vertical-align: baseline; }
+html { font-size: 14px; line-height: 1.85714em; height: 100%; }
+html * { box-sizing: border-box; }
+body { height: 100%; position: relative; font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; color: #555555; -webkit-font-smoothing: antialiased; }
+ul { list-style: none outside; margin-bottom: 0.312em; }
+li { padding-bottom: 0.312em; }
+a { color: #d04526; text-decoration: none; outline: 0; line-height: inherit; }
+a:hover { color: #c03d20; }
+h3, h4 { font-weight: normal; color: #444444; text-rendering: optimizeLegibility; padding: 0.312em 0; line-height: 1.32043em; }
+h3 { font-size: 2.14286rem; }
+h4 { font-size: 1.64286rem; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Grid */
+.row { width: 100%; max-width: 480px; min-width: 320px; margin: 0 auto; }
+.row .row { min-width: 0; }
+.row:before, .row:after { content: ""; display: table; }
+.row:after { clear: both; }
+.column, .columns { margin-left: 2.08333%; float: left; min-height: 1px; }
+.column:first-child, .columns:first-child { margin-left: 0; }
+.row .one.column, .row .one.columns { width: 14.93056%; }
+.row .two.columns { width: 31.94444%; }
+.row .three.columns { width: 48.95833%; }
+.row .four.columns { width: 65.97222%; }
+.row .six.columns { width: 100%; }
+
+/* Forms */
+form label { display: block; font-size: 1rem; line-height: 1.85714em; cursor: pointer; margin-bottom: 9px; }
+form textarea { height: 150px; }
+form ul, form ul li { margin-left: 0; list-style-type: none; }
+.field { position: relative; max-width: 100%; margin-bottom: 10px; vertical-align: middle; font-size: 16px; }
+.field input, .field textarea { max-width: 100%; width: 100%; padding: 0; margin: 0; border: none; outline: none; resize: none; -webkit-appearance: none; font-weight: 300; font-size: 1rem; box-shadow: none; }
+.field .input { position: relative; padding: 0 10px; background: #fff; border: 1px solid #d8d8d8; height: 31px; line-height: 29px; font-size: 1rem; border-radius: 4px; }
+.field .input.textarea { height: auto; }
+.field .wide { width: 65.33333%; margin: 0; }
+
+/* Buttons */
+.btn { display: inline-block; width: auto; background: #f2f2f2; -webkit-appearance: none; font-weight: 600; padding: 0 !important; text-align: center; border-radius: 4px; }
+.btn > a, .btn input { display: block; padding: 0 18px; color: white; height: 100%; }
+.btn input { background: none; border: none; width: 100%; font-size: 100%; cursor: pointer; font-weight: 400; appearance: none; }
+.btn.medium { font-size: 1rem; height: 31px; line-height: 29px; }
+.btn.medium a { position: relative; padding: 0 18px; }
+.btn.medium.icon-left a { padding-left: 31px; }
+.btn.small { font-size: 0.64286rem; height: 21px; line-height: 19px; }
+.btn.small a { position: relative; padding: 0 9px; }
+.btn.small.icon-left a { padding-left: 21px; }
+.btn.medium.icon-left a:before { left: 9.33333px; }
+.btn.small.icon-left a:before { left: 6px; }
+
+.btn.primary { background: #3085d6; border: 1px solid #1f5e9b; background-image: linear-gradient(#85b7e7, #2a85dc); box-shadow: inset 0 0 3px #f0f6fc; }
+.btn.primary:hover { background-image: linear-gradient(#a2d4fc, #54b2fe); box-shadow: inset 0 0 3px white; border-color: #0e90f8; }
+.btn.primary:active { background-image: linear-gradient(#2a85dc, #85b7e7); box-shadow: inset 0 0 3px white; }
+.btn.primary a, .btn.primary input { text-shadow: 0 1px 1px #1a5186; }
+
+.btn.danger { background: #ca3838; border: 1px solid #8f2626; background-image: linear-gradient(#df8989, #d03232); box-shadow: inset 0 0 3px #faeded; }
+.btn.danger:hover { background-image: linear-gradient(#f79696, #f64a4a); box-shadow: inset 0 0 3px white; border-color: #e21212; }
+.btn.danger:active { background-image: linear-gradient(#d03232, #df8989); box-shadow: inset 0 0 3px white; }
+.btn.danger a, .btn.danger input { text-shadow: 0 1px 1px #7b2121; }
+
+.btn.success { background: #58c026; border: 1px solid #3b8019; background-image: linear-gradient(#91e26a, #56c620); box-shadow: inset 0 0 3px #e0f7d5; }
+.btn.success:hover { background-image: linear-gradient(#96e570, #64df29); box-shadow: inset 0 0 3px #e5f9db; border-color: #479f1d; }
+.btn.success:active { background-image: linear-gradient(#56c620, #91e26a); box-shadow: inset 0 0 3px #f0fbea; }
+.btn.success a, .btn.success input { text-shadow: 0 1px 1px #316b15; }
+
+.btn.warning { background: #f6b83f; border: 1px solid #de960a; color: #644405; background-image: linear-gradient(#fbdca0, #fbba3a); box-shadow: inset 0 0 3px white; }
+.btn.warning:hover { background-image: linear-gradient(#feecca, #ffd37d); border-color: #fcb834; }
+.btn.warning:active { background-image: linear-gradient(#fbba3a, #fbdca0); }
+.btn.warning a, .btn.warning input { color: #644405; text-shadow: 0 1px 1px #fbdca0; }
+
+/* App styles */
 body
 {
     background-color: #EEE;
