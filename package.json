@@ -9,6 +9,8 @@
   },
   "scripts": {
     "icons": "node scripts/make-icons.mjs",
+    "dev": "web-ext run --source-dir dist -t chromium",
+    "dist": "npm run build && web-ext build --source-dir dist --artifacts-dir .web-ext-artifacts --overwrite-dest",
     "build": "node scripts/build.mjs",
     "lint": "eslint .",
     "test": "echo \"test: not configured yet (P6.1)\""
@@ -18,6 +20,7 @@
     "esbuild": "^0.28.2",
     "eslint": "^10.12.0",
     "globals": "^17.13.0",
-    "sharp": "^0.35.5"
+    "sharp": "^0.35.5",
+    "web-ext": "^10.7.0"
   }
 }
