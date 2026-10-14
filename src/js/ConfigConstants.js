@@ -7,7 +7,7 @@
  * @copyright Aaron Baker 2014
  */
 
-define([], function()
+const ConfigConstantsModule = (function()
 {
 
     /**
@@ -33,4 +33,6 @@ define([], function()
     ConfigConstants.EVENT_INITIALISED = 'config-initialised';
 
     return ConfigConstants;
-});
+})();
+
+export default ConfigConstantsModule;

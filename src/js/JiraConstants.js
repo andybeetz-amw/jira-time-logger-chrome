@@ -7,11 +7,8 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-
-], function(
-
-) {
+const JiraConstantsModule = (function()
+{
 
     /**
      * JiraConstants class
@@ -62,4 +59,6 @@ define([
     JiraConstants.TYPES_INC_SUBTASKS_YES = 2;
 
     return JiraConstants;
-});
+})();
+
+export default JiraConstantsModule;

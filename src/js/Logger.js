@@ -7,7 +7,7 @@
  * @copyright Aaron Baker 2014
  */
 
-define([], function()
+const LoggerModule = (function()
 {
     /**
      * Logger class
@@ -79,4 +79,6 @@ define([], function()
     };
 
     return new Logger();
-});
+})();
+
+export default LoggerModule;

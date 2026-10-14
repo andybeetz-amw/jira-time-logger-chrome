@@ -7,7 +7,7 @@
  * @copyright Aaron Baker 2013
  */
 
-define([], function()
+const ActivityLogModule = (function()
 {
 
     /**
@@ -157,4 +157,6 @@ define([], function()
     };
 
     return ActivityLog;
-});
+})();
+
+export default ActivityLogModule;

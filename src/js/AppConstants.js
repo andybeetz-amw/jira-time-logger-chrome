@@ -7,7 +7,7 @@
  * @copyright Aaron Baker 2014
  */
 
-define([], function()
+const AppConstantsModule = (function()
 {
 
     /**
@@ -39,4 +39,6 @@ define([], function()
     AppConstants.TIME_HOUR_LIMIT = 10;
 
     return AppConstants;
-});
+})();
+
+export default AppConstantsModule;

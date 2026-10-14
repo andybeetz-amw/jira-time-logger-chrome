@@ -7,7 +7,7 @@
  * @copyright Aaron Baker 2013
  */
 
-define([], function()
+const StopwatchTimeModule = (function()
 {
 
     /**
@@ -94,4 +94,6 @@ define([], function()
     };
 
     return StopwatchTime;
-});
+})();
+
+export default StopwatchTimeModule;

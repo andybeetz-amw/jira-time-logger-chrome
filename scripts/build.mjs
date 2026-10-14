@@ -28,7 +28,7 @@ const amdBridge = {
             if (rel.startsWith('..') || notAmd.includes(rel.split(sep).pop())) return undefined;
             const source = readFileSync(args.path, 'utf8');
             const match = /\b(define|require)\(\s*\[([^\]]*)\]/.exec(source);
-            if (!match) throw new Error(`${rel}: no AMD define/require([...]) found`);
+            if (!match) return undefined; // already ESM: bundled as-is
             const deps = [...match[2].matchAll(/'([^']+)'|"([^"]+)"/g)].map((m) => m[1] ?? m[2]);
             const imports = deps
                 .map((d, i) => (d === 'require' ? '' : `import __d${i} from ${JSON.stringify(d)};\n`))
