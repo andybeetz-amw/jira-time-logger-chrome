@@ -7,14 +7,11 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'require',
-    'Storage/Abstract',
-    'Storage/ChromeExt'
-], function(
-   require,
-   Abstract
-) {
+import Abstract from './Abstract.js';
+import ChromeExt from './ChromeExt.js';
+
+const FactoryModule = (function()
+{
 
     /**
      * Factory class
@@ -61,6 +58,11 @@ define([
     Factory.DEFAULT_TYPE = 'ChromeExt';
 
     /**
+     * Available implementations by type (static map; P2.2 formalises this)
+     */
+    Factory.TYPES = {ChromeExt: ChromeExt};
+
+    /**
      * Get the storage
      *
      * @throws error if the storage cannot be loaded or does not extend the Abstract
@@ -72,7 +74,7 @@ define([
             return this.getStorage();
         }
 
-        var storage = require('Storage/'+Factory.DEFAULT_TYPE);
+        var storage = Factory.TYPES[Factory.DEFAULT_TYPE];
         if (!storage || !(storage instanceof Abstract)) {
             throw 'Storage/Factory::get encountered invalid Storage object';
         }
@@ -82,4 +84,6 @@ define([
     };
 
     return new Factory();
-});
+})();
+
+export default FactoryModule;

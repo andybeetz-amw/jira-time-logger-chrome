@@ -7,14 +7,11 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'require',
-    'Container/Abstract',
-    'Container/ChromeExt'
-], function(
-   require,
-   Abstract
-) {
+import Abstract from './Abstract.js';
+import ChromeExt from './ChromeExt.js';
+
+const FactoryModule = (function()
+{
 
     /**
      * Factory class
@@ -61,6 +58,11 @@ define([
     Factory.DEFAULT_TYPE = 'ChromeExt';
 
     /**
+     * Available implementations by type (static map; P2.2 formalises this)
+     */
+    Factory.TYPES = {ChromeExt: ChromeExt};
+
+    /**
      * Get the container
      *
      * @throws error if the container cannot be loaded or does not extend the Abstract
@@ -72,7 +74,7 @@ define([
             return this.getContainer();
         }
 
-        var container = require('Container/'+Factory.DEFAULT_TYPE);
+        var container = Factory.TYPES[Factory.DEFAULT_TYPE];
         if (!container || !(container instanceof Abstract)) {
             throw 'Container/Factory::get encountered invalid Container object';
         }
@@ -82,4 +84,6 @@ define([
     };
 
     return new Factory();
-});
+})();
+
+export default FactoryModule;
