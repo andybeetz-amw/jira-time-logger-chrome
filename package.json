@@ -8,8 +8,11 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "echo \"build: not configured yet (P1.2)\"",
+    "build": "node scripts/build.mjs",
     "lint": "echo \"lint: not configured yet (P1.4)\"",
     "test": "echo \"test: not configured yet (P6.1)\""
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
   }
 }
