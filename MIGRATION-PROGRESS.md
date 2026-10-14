@@ -97,4 +97,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-14 — P1.3 — 761194a — sharp devDep; scripts/make-icons.mjs (npm run icons); icon16/32/48/128.png committed, manifest not yet wired
 - 2026-10-14 — P1.4 — 79f9e2d — eslint flat config; vendored libs + tests/ ignored; legacy style rules downgraded to warnings (7 warnings, 0 errors)
 - 2026-10-14 — P1.5 — 9c55077 — web-ext devDep; npm run dist builds then zips dist/ to .web-ext-artifacts/ (gitignored); ZIP extracted and loaded unpacked by user, works; npm run dev untested
-- 2026-10-14 — P1.6 — 6288738 — .github/workflows/ci.yml; no test step until P6.1; workflow not yet run on GitHub (needs push)
+- 2026-10-14 — P1.6 — 6288738 — .github/workflows/ci.yml; no test step until P6.1; first CI run failed at upload (hidden dir); fixed in ebc1878
