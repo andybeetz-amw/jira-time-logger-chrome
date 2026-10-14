@@ -28,17 +28,18 @@ It acts as a stopwatch to monitor the length of time you've worked on something 
 
 ### Windows ###
 Unfortunately the Windows version of Chrome does not allow extensions to be installed from anywhere but the Chrome Store. To get around this:
-* Clone or download the latest source code
+* Clone or download the latest source code, then run `npm ci` and `npm run build` (needs Node 20+)
 * In Chrome visit [chrome://extensions](chrome://extensions)
 * Tick the 'Developer Mode' tickbox at the top of the page
 * You should see a new section appear underneath, click 'Load unpacked extension'
-* In the file browser select the 'src' folder of the 'jira-time-logger-chrome' directory and click 'Open'
+* In the file browser select the 'dist' folder of the 'jira-time-logger-chrome' directory and click 'Open'
+* On the configuration page, use your Jira email as the username and an [API token](https://id.atlassian.com/manage-profile/security/api-tokens) as the password. Jira Cloud rejects account passwords, and the failure shows up as 'issue not found'.
 
 
 ## Development ##
 Requires Node 20+ (see `.nvmrc`).
 * `npm ci` to install dependencies
-* `npm run build` copies `src/` to `dist/`
+* `npm run build` bundles the JS entry points with esbuild and copies the remaining static files from `src/` to `dist/`. Load `dist/`, not `src/`.
 * `npm run lint` runs eslint
 * `npm run dist` builds and zips `dist/` into `.web-ext-artifacts/`
 * `npm run dev` launches a browser with `dist/` loaded and reloads it when `dist/` changes. Run `npm run build` first, and again after editing `src/`.
