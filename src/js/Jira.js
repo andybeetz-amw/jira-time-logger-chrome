@@ -7,17 +7,13 @@
  * @copyright Aaron Baker 2013
  */
 
-define([
-    'JiraConstants',
-    'Logger',
-    'Config',
-    'jquery'
-], function(
-    Constants,
-    logger,
-    config,
-    $
-) {
+import Constants from './JiraConstants.js';
+import logger from './Logger.js';
+import config from './Config.js';
+import $ from 'jquery';
+
+const JiraModule = (function()
+{
 
     /**
      * Jira class
@@ -488,4 +484,6 @@ define([
     };
 
     return new Jira();
-});
+})();
+
+export default JiraModule;

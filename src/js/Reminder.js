@@ -7,13 +7,11 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'Config',
-    'Container/Factory'
-], function(
-    config,
-    containerFactory
-) {
+import config from './Config.js';
+import containerFactory from './Container/Factory.js';
+
+const ReminderModule = (function()
+{
 
     /**
      * Reminder class
@@ -88,4 +86,6 @@ define([
     };
 
     return new Reminder();
-});
+})();
+
+export default ReminderModule;

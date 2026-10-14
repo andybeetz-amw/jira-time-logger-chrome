@@ -7,23 +7,16 @@
  * @copyright Aaron Baker 2013
  */
 
-define([
-    'Container/Factory',
-    'Storage/Abstract',
-    'Storage/Factory',
-    'Event/Dispatcher/Config',
-    'Logger',
-    'ConfigConstants',
-    'json!/config/config.json'
-], function(
-    containerFactory,
-    StorageAbstract,
-    storageFactory,
-    eventDispatcher,
-    logger,
-    Constants,
-    defaultJson
-) {
+import containerFactory from './Container/Factory.js';
+import StorageAbstract from './Storage/Abstract.js';
+import storageFactory from './Storage/Factory.js';
+import eventDispatcher from './Event/Dispatcher/Config.js';
+import logger from './Logger.js';
+import Constants from './ConfigConstants.js';
+import defaultJson from '../config/config.json';
+
+const ConfigModule = (function()
+{
     /**
      * Config class
      *
@@ -361,4 +354,6 @@ define([
     };
 
     return new Config();
-});
+})();
+
+export default ConfigModule;
