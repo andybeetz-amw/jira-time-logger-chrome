@@ -53,7 +53,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
     *Done when:* `npm run dist` ZIP loads unpacked (popup, config page, background all work) with no `require.js` in `dist/`.
   - [x] P2.1b ESM-convert no-dependency leaves: `Logger`, `JiraConstants`, `StopwatchTime`, `AppConstants`, `ConfigConstants`, `ActivityLog`. *Done when:* build + lint pass, popup loads.
   - [x] P2.1c ESM-convert `Stopwatch`, `Container/Abstract`, `Storage/Abstract`, `Container/ChromeExt`, `Storage/ChromeExt`.
-  - [ ] P2.1d ESM-convert `Container/Factory`, `Storage/Factory` (keep the dynamic `require` for now; P2.2 replaces it) — may need to be combined with P2.2 if the bundler can't resolve them; decide then.
+  - [x] P2.1d ESM-convert `Container/Factory`, `Storage/Factory` (keep the dynamic `require` for now; P2.2 replaces it) — may need to be combined with P2.2 if the bundler can't resolve them; decide then.
   - [ ] P2.1e ESM-convert `Event/Dispatcher/*` and `Event/Listener/Abstract`.
   - [ ] P2.1f ESM-convert `Config`, `Reminder`, `Jira` (`json!` → JSON import).
   - [ ] P2.1g ESM-convert `View/Config`, `View/Index`, `Event/Listener/Config`, `Event/Listener/Index`, `App`.
@@ -116,3 +116,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-14 — P2.1a — b522a4b — esbuild bundles 3 entries via AMD bridge plugin in build.mjs; require.js/jquery tags dropped from html/manifest; verified loaded by user
 - 2026-10-14 — P2.1b — de1e878 — Logger/JiraConstants/StopwatchTime/AppConstants/ConfigConstants/ActivityLog now ESM (IIFE body + export default); bridge passes ESM through; eslint sourceType module; verified popup/config/issue lookup (log-time not exercised); Jira Cloud needs an API token, not a password
 - 2026-10-14 — P2.1c — 0c0ae2a — Stopwatch, Container/Abstract+ChromeExt, Storage/Abstract+ChromeExt now ESM with real imports; verified stopwatch ticks, config persists, issue lookup works; known/expected console error "listener indicated an asynchronous response..." (unconditional return true in onMessage, fixed in P2.5)
+- 2026-10-14 — P2.1d — b613723 — Container/Factory and Storage/Factory now ESM; dynamic require replaced by static `Factory.TYPES` map (so P2.2 is mostly done; revisit when reaching it); build + lint pass, browser load not yet verified by user
