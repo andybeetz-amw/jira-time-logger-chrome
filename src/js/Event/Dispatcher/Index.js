@@ -7,15 +7,12 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'Event/Dispatcher/Abstract',
-    'AppConstants',
-    'ActivityLog'
-], function(
-    Abstract,
-    Constants,
-    AL
-) {
+import Abstract from './Abstract.js';
+import Constants from '../../AppConstants.js';
+import AL from '../../ActivityLog.js';
+
+const IndexModule = (function()
+{
 
     /**
      * Index class
@@ -120,4 +117,6 @@ define([
     };
 
     return new Index();
-});
+})();
+
+export default IndexModule;

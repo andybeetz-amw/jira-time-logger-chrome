@@ -7,11 +7,10 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'Container/Factory',
-], function(
-    containerFactory
-) {
+import containerFactory from '../../Container/Factory.js';
+
+const AbstractModule = (function()
+{
 
     /**
      * Abstract class
@@ -54,4 +53,6 @@ define([
     };
 
     return Abstract;
-});
+})();
+
+export default AbstractModule;

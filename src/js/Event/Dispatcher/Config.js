@@ -7,13 +7,11 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'Event/Dispatcher/Abstract',
-    'ConfigConstants'
-], function(
-    Abstract,
-    Constants
-) {
+import Abstract from './Abstract.js';
+import Constants from '../../ConfigConstants.js';
+
+const ConfigModule = (function()
+{
 
     /**
      * Config class
@@ -40,4 +38,6 @@ define([
     };
 
     return new Config();
-});
+})();
+
+export default ConfigModule;
