@@ -43,7 +43,21 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 
 ### P2 — MV3 shell + RPC core
 *(Split into steps when P1 is done — needs a fresh look at the code then. Outline:)*
-- [ ] P2.1 Convert AMD modules to ESM, a few files per commit, bundled by esbuild; page still MV2.
+- [ ] P2.1 *(split — see P2.1a–h)* Convert AMD modules to ESM, bundled by esbuild; page still MV2.
+  Constraint: esbuild cannot bundle AMD `define()` files, and each commit must leave `src/` loadable, so the
+  bundler goes in first with a bridge for not-yet-converted modules, then modules convert leaf-first.
+  - [ ] P2.1a Bundle the 3 entry points (`index.js`, `ui-index.js`, `ui-config.js`) with esbuild into `dist/js/`, using a
+    small build-time plugin that resolves legacy AMD modules by name from `src/js` (baseUrl) and stubs `jquery`
+    to the global `$`; `json!/config/config.json` handled in the plugin. `src/index.html`, `src/config.html`
+    and `manifest.json` keep working because `build.mjs` emits the same filenames; RequireJS no longer loaded in `dist/`.
+    *Done when:* `npm run dist` ZIP loads unpacked (popup, config page, background all work) with no `require.js` in `dist/`.
+  - [ ] P2.1b ESM-convert no-dependency leaves: `Logger`, `JiraConstants`, `StopwatchTime`, `AppConstants`, `ConfigConstants`, `ActivityLog`. *Done when:* build + lint pass, popup loads.
+  - [ ] P2.1c ESM-convert `Stopwatch`, `Container/Abstract`, `Storage/Abstract`, `Container/ChromeExt`, `Storage/ChromeExt`.
+  - [ ] P2.1d ESM-convert `Container/Factory`, `Storage/Factory` (keep the dynamic `require` for now; P2.2 replaces it) — may need to be combined with P2.2 if the bundler can't resolve them; decide then.
+  - [ ] P2.1e ESM-convert `Event/Dispatcher/*` and `Event/Listener/Abstract`.
+  - [ ] P2.1f ESM-convert `Config`, `Reminder`, `Jira` (`json!` → JSON import).
+  - [ ] P2.1g ESM-convert `View/Config`, `View/Index`, `Event/Listener/Config`, `Event/Listener/Index`, `App`.
+  - [ ] P2.1h ESM-convert the 3 entry points; remove the AMD bridge plugin from `build.mjs`. *Done when:* no `define(` or `require(` left in `src/js` outside RequireJS itself and its plugins.
 - [ ] P2.2 Replace `Container/Factory.js` / `Storage/Factory.js` dynamic requires with static maps.
 - [ ] P2.3 Delete RequireJS + plugins; `config.json` via esbuild import.
 - [ ] P2.4 Add `sw.js` with synchronous top-level listeners (not yet wired to manifest).
