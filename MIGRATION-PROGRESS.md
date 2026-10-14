@@ -31,7 +31,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - [x] P0.7 Drop `gumby.css`/Gumby script tags from `index.html` and `config.html`; system font stack. *Done when:* no remote URL or `@import` in `src/`.
 - [x] P0.8 Delete `src/gumby/` and `src/js/modernizr.min.js`. *Done when:* popup + config page still work.
 - [x] P0.9 Replace the `jqueryColor` `.animate` highlight (`View/Index.js:154-158`) with a CSS transition; delete `jquery.color.min.js` and its dep at `:11`. *Done when:* log-entry highlight still fades.
-- [ ] P0.10 **User-run:** purge `.pem`/`.crx` from history with `git filter-repo`, force-push, announce to collaborators. *Done when:* user confirms.
+- [ ] P0.10 *(deferred, owner's call)* **User-run:** purge `.pem`/`.crx` from history with `git filter-repo`, force-push, announce to collaborators. *Done when:* user confirms.
 
 ### P1 — Build + packaging
 - [ ] P1.1 Add `package.json` + `package-lock.json` with no scripts beyond placeholders; `.nvmrc`/engines.
@@ -87,7 +87,8 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - [ ] P7.3 **User-run:** CWS + Edge Add-ons submission.
 
 ## Deviations from the plan
-*(none yet)*
+- P0.10 deferred: the repo (`Lilchef/jira-time-logger-chrome`) is not owned by the migrating user, so the history purge
+  and force-push are left to the repo owner. The `.pem` private key remains in history until they decide. Does not block P1+.
 
 ## Log
 *(append: date — step — commit hash — one-line note)*
