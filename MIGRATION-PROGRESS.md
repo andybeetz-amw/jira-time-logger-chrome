@@ -35,7 +35,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 
 ### P1 — Build + packaging
 - [x] P1.1 Add `package.json` + `package-lock.json` with no scripts beyond placeholders; `.nvmrc`/engines.
-- [ ] P1.2 Add esbuild; `npm run build` copies `src/` static files to `dist/` unchanged (still MV2, still loads).
+- [x] P1.2 Add esbuild; `npm run build` copies `src/` static files to `dist/` unchanged (still MV2, still loads).
 - [ ] P1.3 Add icon generation with `sharp` (16/32/48 from the 128px logo); commit generated icons.
 - [ ] P1.4 Add eslint with a minimal config; `npm run lint` passes.
 - [ ] P1.5 Add `web-ext` + `npm run dist` producing a ZIP.
@@ -93,3 +93,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 ## Log
 *(append: date — step — commit hash — one-line note)*
 - 2026-10-14 — P1.1 — 5b5dd55 — package.json (placeholder scripts), lockfile, .nvmrc (Node 20)
+- 2026-10-14 — P1.2 — d897e92 — esbuild devDep; scripts/build.mjs copies src/ to dist/ (no bundling yet)
