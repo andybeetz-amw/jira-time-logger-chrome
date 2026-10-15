@@ -12,6 +12,7 @@ import containerFactory from '../Container/Factory.js';
 import AL from '../ActivityLog.js';
 import JiraConstants from '../JiraConstants.js';
 import config from '../Config.js';
+import {rpcCall} from '../Rpc.js';
 
 const ViewIndexModule = (function()
 {
@@ -78,6 +79,18 @@ const ViewIndexModule = (function()
         {
             issueTimeout = newIssueTimeout;
             return this;
+        };
+
+        /**
+         * Call the background app over RPC
+         *
+         * @param String type
+         * @param * data
+         * @returns Promise
+         */
+        this.rpc = function(type, data)
+        {
+            return rpcCall('ui-index', type, data);
         };
 
         /**
@@ -362,8 +375,7 @@ const ViewIndexModule = (function()
      */
     Index.prototype.updateLoggedTotal = function(total)
     {
-        total = total || this.getApp().getLoggedTotalAsString();
-        $('#loggedTotal').text(total);
+        this._setText('#loggedTotal', total, 'getLoggedTotalAsString');
         return this;
     };
 
@@ -375,8 +387,7 @@ const ViewIndexModule = (function()
      */
     Index.prototype.updateDayGrandTotal = function(total)
     {
-        total = total || this.getApp().getDayGrandTotalAsString();
-        $('#dayGrandTotal').text(total);
+        this._setText('#dayGrandTotal', total, 'getDayGrandTotalAsString');
         return this;
     };
 
@@ -388,8 +399,7 @@ const ViewIndexModule = (function()
      */
     Index.prototype.updateTimeAuto = function(time)
     {
-        time = time || this.getApp().getTimeAutoAsString();
-        $('.timeAuto').text(time);
+        this._setText('.timeAuto', time, 'getTimeAutoAsString');
         return this;
     };
 
@@ -400,6 +410,31 @@ const ViewIndexModule = (function()
      */
 
     /**
+     * Set the text of an element: to the given value, or to the result of an RPC call if none is given
+     *
+     * @param String selector
+     * @param String value
+     * @param String rpcType
+     * @returns self
+     * @private
+     */
+    Index.prototype._setText = function(selector, value, rpcType)
+    {
+        if (value) {
+            $(selector).text(value);
+            return this;
+        }
+        this.rpc(rpcType).then(function(result)
+        {
+            $(selector).text(result);
+        }, function(error)
+        {
+            console.error(rpcType + ' failed:', error);
+        });
+        return this;
+    };
+
+    /**
      * Set the version string
      *
      * @returns self
@@ -407,8 +442,13 @@ const ViewIndexModule = (function()
      */
     Index.prototype._setVersion = function()
     {
-        var version = this.getApp().getVersion();
-        $('#version').text('v'+version);
+        this.rpc('getVersion').then(function(version)
+        {
+            $('#version').text('v'+version);
+        }, function(error)
+        {
+            console.error('getVersion failed:', error);
+        });
         return this;
     };
 
@@ -433,11 +473,18 @@ const ViewIndexModule = (function()
      */
     Index.prototype._populateActivityLog = function()
     {
-        var logs = this.getApp().getActivityLogs();
-        var animate = false;
-        for (var index in logs) {
-            this.addActivityLog(logs[index], animate);
-        }
+        var self = this;
+        this.rpc('getActivityLogs').then(function(logs)
+        {
+            var animate = false;
+            for (var index in logs) {
+                var log = logs[index];
+                self.addActivityLog(new AL(log.message, log.level, new Date(log.dateTimeLogged)), animate);
+            }
+        }, function(error)
+        {
+            console.error('getActivityLogs failed:', error);
+        });
         return this;
     };
 
@@ -451,9 +498,20 @@ const ViewIndexModule = (function()
     {
         $('#issue').parent().removeClass('danger');
         $('#summary').text('*Checking...*');
-        var summary = this.getApp().getIssueSummary(issueKey);
-        summary = (summary || issueKey + ' not found');
-        $('#summary').text(summary);
+        // Responses can arrive out of order while the user keeps typing: only the latest check may write.
+        var check = this._issueCheck = (this._issueCheck || 0) + 1;
+        var self = this;
+        var show = function(summary)
+        {
+            if (check === self._issueCheck) {
+                $('#summary').text(summary || issueKey + ' not found');
+            }
+        };
+        this.rpc('getIssueSummary', {issueKey: issueKey}).then(show, function(error)
+        {
+            console.error('getIssueSummary failed:', error);
+            show(null);
+        });
         return this;
     };
 

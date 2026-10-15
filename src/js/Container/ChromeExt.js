@@ -223,8 +223,8 @@ const ChromeExtModule = (function()
         chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
         {
             var listeners = self.getListenersForEvent(request.type);
-            if (!listeners) {
-                return false;
+            if (!listeners.length) {
+                return false; // not one of ours (e.g. an RPC envelope): leave it for other listeners
             }
             var additional = request.data || [];
             // Replicate normal events by making the first argument to the callback an Event object

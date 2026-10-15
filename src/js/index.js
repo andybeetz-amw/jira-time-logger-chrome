@@ -18,8 +18,20 @@ import logger from './Logger.js';
 import containerFactory from './Container/Factory.js';
 import {createMessageListener} from './Rpc.js';
 
-// RPC entry point for the popup/config pages; handlers are added per type from P2.6b.
-chrome.runtime.onMessage.addListener(createMessageListener({}));
+// RPC entry point for the popup/config pages. Results must be structured-cloneable, so ActivityLogs
+// are sent as plain objects.
+chrome.runtime.onMessage.addListener(createMessageListener({
+    getVersion: () => app.getVersion(),
+    getLoggedTotalAsString: () => app.getLoggedTotalAsString(),
+    getDayGrandTotalAsString: () => app.getDayGrandTotalAsString(),
+    getTimeAutoAsString: (data) => app.getTimeAutoAsString(data && data.roundToNearest),
+    getIssueSummary: (data) => app.getIssueSummary(data.issueKey),
+    getActivityLogs: () => app.getActivityLogs().map((log) => ({
+        message: log.getMessage(),
+        level: log.getLevel(),
+        dateTimeLogged: log.getDateTimeLogged().toISOString()
+    }))
+}));
 
 try {
     globalThis.appInstance = app;
