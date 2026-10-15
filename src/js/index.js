@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener(createMessageListener({
     setTimeManual: (data) => { app.setTimeManual(data.manual); },
     resetLoggedTotal: (data) => { app.resetLoggedTotal(data.log); },
     reconfigure: () => { app.reconfigure(); },
-    bugRequest: () => { app.bugRequest(); },
+    getBugReportUrl: () => app.getBugReportUrl(),
     getLoggedTotalAsString: () => app.getLoggedTotalAsString(),
     getDayGrandTotalAsString: () => app.getDayGrandTotalAsString(),
     getTimeAutoAsString: (data) => app.getTimeAutoAsString(data && data.roundToNearest),

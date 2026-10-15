@@ -86,7 +86,7 @@ const ChromeExtModule = (function()
      */
     ChromeExt.prototype.showConfiguration = function()
     {
-        chrome.tabs.create({url: "config.html"});
+        chrome.tabs.create({url: chrome.runtime.getURL('config.html')});
     };
 
     /**
@@ -95,7 +95,7 @@ const ChromeExtModule = (function()
      */
     ChromeExt.prototype.closeConfiguration = function()
     {
-        var configUrl = chrome.extension.getURL('config.html');
+        var configUrl = chrome.runtime.getURL('config.html');
         chrome.tabs.query({url: configUrl}, function(tabs)
         {
             // Should only be one but may as well loop them
@@ -153,7 +153,7 @@ const ChromeExtModule = (function()
         chrome.notifications.create('', {
           title: title,
           message: message,
-          iconUrl: 'images/jira_time_logger_logo.png',
+          iconUrl: chrome.runtime.getURL('images/jira_time_logger_logo.png'),
           type: 'basic',
         }, function(notificationId){
             if (!duration) {
@@ -175,10 +175,14 @@ const ChromeExtModule = (function()
     ChromeExt.prototype.dispatchEvent = function(name, additional)
     {
         Abstract.prototype.dispatchEvent.call(this, name, additional);
-        chrome.runtime.sendMessage({
+        // A closed popup (no receiver) is the normal case, not a failure
+        var sent = chrome.runtime.sendMessage({
             type: name,
             data: additional
         });
+        if (sent && sent.catch) {
+            sent.catch(function() {});
+        }
     };
 
     /**

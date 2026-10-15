@@ -293,7 +293,12 @@ const ListenerIndexModule = (function()
         var self = this;
         $('#bugButton').off('click').on('click', function()
         {
-            self.send('bugRequest');
+            self.send('getBugReportUrl').then(function(url)
+            {
+                if (url) {
+                    window.open(url, '_blank');
+                }
+            });
         });
         return this;
     };

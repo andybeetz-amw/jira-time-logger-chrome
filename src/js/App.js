@@ -637,14 +637,17 @@ const AppModule = (function()
     };
 
     /**
-     * Handle a request to submit a bug
+     * Get the mailto: URL for submitting a bug
      *
+     * The caller opens it itself: tabs.create does not support the mailto: scheme.
+     *
+     * @returns String
      */
-    App.prototype.bugRequest = function()
+    App.prototype.getBugReportUrl = function()
     {
         var email = this.getBugReportEmail();
         var subject = encodeURIComponent('JIRA Time Logger bug report');
-        this.getContainer().openURL('mailto:'+email+'?subject='+subject);
+        return 'mailto:'+email+'?subject='+subject;
     };
 
     /*
