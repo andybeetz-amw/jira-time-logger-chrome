@@ -7,26 +7,16 @@
  * @copyright Aaron Baker 2014
  */
 
-require([
-    'jquery',
-    'Config',
-    'ConfigConstants',
-    'View/Config',
-    'Event/Listener/Config',
-    'Container/Factory'
-], function(
-    $,
-    config,
-    ConfigConstants,
-    view,
-    listener,
-    containerFactory
-) {
-    var forContext = 'ui-config';
-    containerFactory.get().registerCustomEventListener(ConfigConstants.EVENT_INITIALISED+'_'+forContext, function()
-    {
-        view.init();
-        listener.init();
-    });
-    config.init(forContext);
+import config from './Config.js';
+import ConfigConstants from './ConfigConstants.js';
+import view from './View/Config.js';
+import listener from './Event/Listener/Config.js';
+import containerFactory from './Container/Factory.js';
+
+var forContext = 'ui-config';
+containerFactory.get().registerCustomEventListener(ConfigConstants.EVENT_INITIALISED+'_'+forContext, function()
+{
+    view.init();
+    listener.init();
 });
+config.init(forContext);
