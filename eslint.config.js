@@ -8,8 +8,6 @@ export default [
             'node_modules/**',
             'tests/**',
             'src/js/jquery.min.js',
-            'src/js/require.js',
-            'src/js/require-plugin/**',
         ],
     },
     js.configs.recommended,
@@ -21,9 +19,6 @@ export default [
             globals: {
                 ...globals.browser,
                 chrome: 'readonly',
-                define: 'readonly',
-                require: 'readonly',
-                requirejs: 'readonly',
                 $: 'readonly',
                 jQuery: 'readonly',
             },
