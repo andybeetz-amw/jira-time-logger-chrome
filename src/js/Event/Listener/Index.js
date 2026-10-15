@@ -13,6 +13,7 @@ import containerFactory from '../../Container/Factory.js';
 import AppConstants from '../../AppConstants.js';
 import view from '../../View/Index.js';
 import AL from '../../ActivityLog.js';
+import {rpcCall} from '../../Rpc.js';
 
 const ListenerIndexModule = (function()
 {
@@ -55,6 +56,21 @@ const ListenerIndexModule = (function()
         this.isInitialised = function()
         {
             return initialised;
+        };
+
+        /**
+         * Call the background app over RPC without waiting for the result; failures are logged
+         *
+         * @param String type
+         * @param * data
+         * @returns Promise
+         */
+        this.send = function(type, data)
+        {
+            return rpcCall('ui-index', type, data).catch(function(error)
+            {
+                console.error(type + ' failed:', error);
+            });
         };
 
         /**
@@ -205,12 +221,12 @@ const ListenerIndexModule = (function()
      */
     Index.prototype._registerTimeLoggedListener = function()
     {
-        var app = this.getApp();
+        var self = this;
         var view = this.getView();
         this._registerCustomEventListener(AppConstants.EVENT_TIME_LOGGED, function(e, time)
         {
             view.resetTimeForm();
-            app.setTimeManual(false);
+            self.send('setTimeManual', {manual: false});
         });
         return this;
     };
@@ -255,10 +271,10 @@ const ListenerIndexModule = (function()
      */
     Index.prototype._registerReconfigureListener = function()
     {
-        var app = this.getApp();
+        var self = this;
         $('#reconfigureButton').off('click').on('click', function()
         {
-            app.reconfigure();
+            self.send('reconfigure');
             // Prevent regular form submission
             return false;
         });
@@ -273,10 +289,10 @@ const ListenerIndexModule = (function()
      */
     Index.prototype._registerBugListener = function()
     {
-        var app = this.getApp();
+        var self = this;
         $('#bugButton').off('click').on('click', function()
         {
-            app.bugRequest();
+            self.send('bugRequest');
         });
         return this;
     };
@@ -362,12 +378,12 @@ const ListenerIndexModule = (function()
      */
     Index.prototype._registerTimeClickListener = function()
     {
-        var app = this.getApp();
+        var self = this;
         var view = this.getView();
         $('#timeAuto').off('click').on('click', function()
         {
             view.showTimeManual();
-            app.setTimeManual(true);
+            self.send('setTimeManual', {manual: true});
         });
         return this;
     };
@@ -467,10 +483,10 @@ const ListenerIndexModule = (function()
      */
     Index.prototype._registerResetLoggedTotalClickListener = function()
     {
-        var app = this.getApp();
+        var self = this;
         $('#resetLoggedTotalButton').off('click').on('click', function()
         {
-            app.resetLoggedTotal(true);
+            self.send('resetLoggedTotal', {log: true});
         });
         return this;
     };
