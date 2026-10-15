@@ -349,7 +349,7 @@ const AppModule = (function()
         {
             self.updateTime(time);
             if (self.getReminder().isRequired(time)) {
-                self.getReminder().show(time);
+                self.getReminder().show(self.stopwatchTimeToJiraTime(time));
             }
         });
         this.resetTime();

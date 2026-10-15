@@ -74,12 +74,11 @@ const ReminderModule = (function()
     /**
      * Show a reminder to the user to log their time
      *
-     * @param StopwatchTime timeElapsed
+     * @param String jiraTime The elapsed time as a JIRA time phrase (App.stopwatchTimeToJiraTime)
      * @returns self
      */
-    Reminder.prototype.show = function(timeElapsed)
+    Reminder.prototype.show = function(jiraTime)
     {
-        var jiraTime = this.getContainer().getAppInstance().stopwatchTimeToJiraTime(timeElapsed);
         var title = 'JTL Reminder';
         var message = 'You\'ve not logged any time for:\n' + jiraTime;
         this.getContainer().showNotification(title, message, Reminder.NOTIFICATION_DURATION_MS);
