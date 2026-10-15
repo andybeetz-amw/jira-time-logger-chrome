@@ -56,7 +56,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
   - [x] P2.1d ESM-convert `Container/Factory`, `Storage/Factory` (keep the dynamic `require` for now; P2.2 replaces it) — may need to be combined with P2.2 if the bundler can't resolve them; decide then.
   - [x] P2.1e ESM-convert `Event/Dispatcher/*` and `Event/Listener/Abstract`.
   - [x] P2.1f ESM-convert `Config`, `Reminder`, `Jira` (`json!` → JSON import).
-  - [ ] P2.1g ESM-convert `View/Config`, `View/Index`, `Event/Listener/Config`, `Event/Listener/Index`, `App`.
+  - [x] P2.1g ESM-convert `View/Config`, `View/Index`, `Event/Listener/Config`, `Event/Listener/Index`, `App`.
   - [ ] P2.1h ESM-convert the 3 entry points; remove the AMD bridge plugin from `build.mjs`. *Done when:* no `define(` or `require(` left in `src/js` outside RequireJS itself and its plugins.
 - [ ] P2.2 Replace `Container/Factory.js` / `Storage/Factory.js` dynamic requires with static maps.
 - [ ] P2.3 Delete RequireJS + plugins; `config.json` via esbuild import.
@@ -119,3 +119,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-14 — P2.1d — b613723 — Container/Factory and Storage/Factory now ESM; dynamic require replaced by static `Factory.TYPES` map (so P2.2 is mostly done; revisit when reaching it); build + lint pass, verified loaded by user
 - 2026-10-14 — P2.1e — 41984c4 — Event/Dispatcher/{Abstract,Config,Index} and Event/Listener/Abstract now ESM; build + lint pass, verified loaded by user
 - 2026-10-14 — P2.1f — 76eced6 — Config, Reminder, Jira now ESM; config.json imported directly; build + lint pass (new warning: Config's StorageAbstract import is unused, was an unreported unused AMD param); verified loaded by user
+- 2026-10-15 — P2.1g — cfe8a9e — View/Config+Index, Event/Listener/Config+Index, App now ESM; Listener/Config's reassigned `view` import became a local var (esbuild forbids assigning imports); build + lint pass (0 errors, 6 warnings); awaiting user load check
