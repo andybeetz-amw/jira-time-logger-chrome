@@ -248,6 +248,14 @@ const AppModule = (function()
     App._instance = null;
 
     /**
+     * Has start() completed (config valid, stopwatch listener registered)?
+     *
+     * @type Boolean
+     * @private
+     */
+    App.prototype._started = false;
+
+    /**
      * Get the singleton instance
      *
      * @static
@@ -336,12 +344,18 @@ const AppModule = (function()
      */
     App.prototype.start = function()
     {
+        // Also called after a config change, which must not add a second stopwatch listener
+        if (this._started) {
+            return;
+        }
+
         // See if config needs setting
         if (!this._testConfig()) {
             this.alertUser('Connection to JIRA failed, please check your settings are correct then try again');
             this.reconfigure();
             return;
         }
+        this._started = true;
 
         this.resetLoggedTotal();
         var self = this;

@@ -8,6 +8,7 @@
  */
 
 import Abstract from './Abstract.js';
+import {rpcCall} from '../Rpc.js';
 
 const ChromeExtModule = (function()
 {
@@ -113,7 +114,11 @@ const ChromeExtModule = (function()
      */
     ChromeExt.prototype.configurationChanged = function()
     {
-        chrome.runtime.reload();
+        // The background app re-reads the config (runtime.reload() is dev-mode only in MV3)
+        rpcCall('ui-config', 'configChanged').catch(function(error)
+        {
+            console.error('configChanged failed:', error);
+        });
     };
 
     /**

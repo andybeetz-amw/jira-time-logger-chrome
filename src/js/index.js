@@ -14,6 +14,8 @@ import logger from './Logger.js';
 import containerFactory from './Container/Factory.js';
 import {createMessageListener} from './Rpc.js';
 
+const RELOAD_CONTEXT = 'index-reload';
+
 // RPC entry point for the popup/config pages. Results must be structured-cloneable, so ActivityLogs
 // are sent as plain objects.
 chrome.runtime.onMessage.addListener(createMessageListener({
@@ -26,6 +28,9 @@ chrome.runtime.onMessage.addListener(createMessageListener({
     setTimeManual: (data) => { app.setTimeManual(data.manual); },
     resetLoggedTotal: (data) => { app.resetLoggedTotal(data.log); },
     reconfigure: () => { app.reconfigure(); },
+    // Config page saved new settings: re-read them (replaces runtime.reload()). The app starts via the
+    // listener below if it had not started yet (first-time setup).
+    configChanged: () => { config.init(RELOAD_CONTEXT); },
     getBugReportUrl: () => app.getBugReportUrl(),
     getLoggedTotalAsString: () => app.getLoggedTotalAsString(),
     getDayGrandTotalAsString: () => app.getDayGrandTotalAsString(),
@@ -41,6 +46,10 @@ chrome.runtime.onMessage.addListener(createMessageListener({
 try {
     var forContext = 'index';
     containerFactory.get().registerCustomEventListener(ConfigConstants.EVENT_INITIALISED+'_'+forContext, function()
+    {
+        app.start();
+    });
+    containerFactory.get().registerCustomEventListener(ConfigConstants.EVENT_INITIALISED+'_'+RELOAD_CONTEXT, function()
     {
         app.start();
     });
