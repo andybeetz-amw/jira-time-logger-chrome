@@ -80,7 +80,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 
 ### P3 — Transport (one cutover; split only into prep commits + one cutover commit)
 - [ ] P3.1 Delete dead subtask code in `Jira.js` + matching `JiraConstants`.
-- [ ] P3.2 Add promise-based `request()` with fetch/auth/timeout/429 behind tests; not yet used.
+- [ ] P3.2 Add promise-based `request()` with fetch/auth/timeout/429 behind tests; not yet used. Use `credentials: 'omit'` so a browser Jira session cookie cannot mask wrong credentials (see P2.7b log).
 - [ ] P3.3 Cutover: all `Jira.js` methods + all callers async; delete `ajaxValues`.
 - [ ] P3.4 Replace `alert()`/`confirm()`/`document` use per plan.
 
