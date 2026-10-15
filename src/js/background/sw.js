@@ -5,20 +5,20 @@
  *
  * Chrome only delivers the event that woke the worker to listeners registered synchronously during
  * the first turn of script evaluation, so every listener is registered at top level, before any
- * await. Handlers are placeholders until the RPC core (P2.5+), alarms and notifications (P4) land.
+ * await. Other handlers are placeholders until alarms and notifications (P4) land.
  */
+
+import {createMessageListener} from '../Rpc.js';
 
 chrome.runtime.onInstalled.addListener(function(details)
 {
     console.debug('sw: onInstalled', details.reason);
 });
 
-// Returning false: no async response is promised (the always-respond handler arrives in P2.5).
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
-{
-    console.debug('sw: onMessage', request && request.type);
-    return false;
-});
+// Handlers are added per RPC type as P2.6 moves the background-page calls here; until then every
+// envelope is answered with an "unknown type" error rather than left hanging.
+const handlers = {};
+chrome.runtime.onMessage.addListener(createMessageListener(handlers));
 
 chrome.runtime.onConnect.addListener(function(port)
 {

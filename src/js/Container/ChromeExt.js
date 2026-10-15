@@ -224,17 +224,18 @@ const ChromeExtModule = (function()
         {
             var listeners = self.getListenersForEvent(request.type);
             if (!listeners) {
-                return;
+                return false;
             }
             var additional = request.data || [];
             // Replicate normal events by making the first argument to the callback an Event object
-            additional.unshift(new Event(name));
+            additional.unshift(new Event(request.type));
             for (var index in listeners)
             {
                 var callback = listeners[index];
                 callback.apply(null, additional);
             }
-            return true;
+            sendResponse({ok: true});
+            return false;
         });
     };
 
