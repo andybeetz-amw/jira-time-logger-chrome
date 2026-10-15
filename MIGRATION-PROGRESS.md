@@ -62,7 +62,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - [x] P2.3 Delete RequireJS + plugins; `config.json` via esbuild import.
 - [x] P2.4 Add `sw.js` with synchronous top-level listeners (not yet wired to manifest).
 - [x] P2.5 Typed RPC envelope + always-`sendResponse` handler.
-- [ ] P2.6 *(split — see P2.6a–e)* Replace `getBackgroundPage()` calls in `Container/ChromeExt.js` with RPC.
+- [x] P2.6 *(split — see P2.6a–e)* Replace `getBackgroundPage()` calls in `Container/ChromeExt.js` with RPC.
   Constraint: the popup calls ~20 `App` methods synchronously (`View/Index`, `Event/Listener/Index`), so each
   group converts to async RPC separately; the page must keep working (still MV2) after every commit.
   - [x] P2.6a Add `rpcCall(source, type, data)` client to `Rpc.js` (promise; resolves `result`, rejects on `{ok:false}` or a missing receiver) and register an RPC listener in `index.js` (background) with an empty handler map. *Done when:* build + lint pass, node test of the client against the listener, popup still works.
@@ -72,7 +72,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
     - [x] P2.6c2 `getTimeManual`-dependent logic: add `getTimeManual` handler; make `View.validateTimeForm`, `View.getTimeFormValues` (also uses `getTimeAutoAsString`) and the clear-button handler (`resetTime`, `setTimeManual`) async.
     - [x] P2.6c3 Form submit chain: `alertUser`, `logTime` (returns success), then `deductTime`/`resetTime`, as one async sequence.
   - [x] P2.6d `Reminder.show` uses its own app reference instead of `getAppInstance()` (runs in the background/SW); `closeConfiguration` stays page-side.
-  - [ ] P2.6e Delete `getAppInstance`/`getConfigInstance` (Abstract + ChromeExt) and the `globalThis.appInstance`/`configInstance` exports in `index.js`. *Done when:* no `getBackgroundPage` in `src/`.
+  - [x] P2.6e Delete `getAppInstance`/`getConfigInstance` (Abstract + ChromeExt) and the `globalThis.appInstance`/`configInstance` exports in `index.js`. *Done when:* no `getBackgroundPage` in `src/`.
 - [ ] P2.7 Fix `getURL`, `runtime.reload`, `management`, `mailto:`, `sendMessage` `.catch()`.
 - [ ] P2.8 Flip `manifest.json` to MV3 (version 4.0.0 deferred to P7).
 
@@ -143,3 +143,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-15 — P2.6c2 — a4d2666 — getTimeManual handler; View.validateTimeForm/getTimeFormValues return Promises; Listener form-submit chains on them (logTime/getTimeManual/deductTime/resetTime still direct app calls until c3); clear button uses RPC getTimeManual (its resetTime(true) still direct until c3); build + lint pass; verified loaded by user (all six popup scenarios)
 - 2026-10-15 — P2.6c3 — 715bdf8 — handlers alertUser/logTime/deductTime/resetTime; Listener/Index submit chain + clear button fully over RPC (no app reference left in Listener/Index); manual flag read BEFORE logTime (time-logged event resets it, would race); alert()/confirm() still run in the background page (P3.4); build + lint pass; verified loaded by user (submit, manual deduct, validation, both Reset paths)
 - 2026-10-15 — P2.6d — 679cf51 — Reminder.show now takes the JIRA time string (App converts it) instead of calling getAppInstance(); only View/Index and Listener/Index getApp() definitions (now unused) still call getAppInstance — removed in P2.6e; closeConfiguration stays page-side; build + lint pass; verified loaded by user (reminder notification shown)
+- 2026-10-15 — P2.6e — 85ba9c4 — removed getAppInstance/getConfigInstance, unused getApp() helpers + containerFactory imports, globalThis exports; grep finds no getBackgroundPage/appInstance/configInstance in src/ (only jquery.min); P2.6 complete; build + lint pass; awaiting user load check
