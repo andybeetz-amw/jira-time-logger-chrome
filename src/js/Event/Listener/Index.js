@@ -59,6 +59,18 @@ const ListenerIndexModule = (function()
         };
 
         /**
+         * Call the background app over RPC
+         *
+         * @param String type
+         * @param * data
+         * @returns Promise
+         */
+        this.rpc = function(type, data)
+        {
+            return rpcCall('ui-index', type, data);
+        };
+
+        /**
          * Call the background app over RPC without waiting for the result; failures are logged
          *
          * @param String type
@@ -67,7 +79,7 @@ const ListenerIndexModule = (function()
          */
         this.send = function(type, data)
         {
-            return rpcCall('ui-index', type, data).catch(function(error)
+            return this.rpc(type, data).catch(function(error)
             {
                 console.error(type + ' failed:', error);
             });
@@ -345,27 +357,34 @@ const ListenerIndexModule = (function()
             e.preventDefault();
 
             // Validation
-            var errors = view.validateTimeForm();
-            if (errors.length) {
-                app.alertUser(errors.join('\n'));
-                return;
-            }
+            view.validateTimeForm().then(function(errors)
+            {
+                if (errors.length) {
+                    app.alertUser(errors.join('\n'));
+                    return;
+                }
 
-            // No errors, submit
-            var values = view.getTimeFormValues();
-            var success = app.logTime(
-                values.time, values.issue.toUpperCase(), values.description, values.summary
-            );
-            if (!success) {
-                return false;
-            }
+                // No errors, submit
+                return view.getTimeFormValues().then(function(values)
+                {
+                    var success = app.logTime(
+                        values.time, values.issue.toUpperCase(), values.description, values.summary
+                    );
+                    if (!success) {
+                        return;
+                    }
 
-            if (app.getTimeManual()) {
-                app.deductTime(values.time);
-                view.showTimeAuto();
-            } else {
-                app.resetTime();
-            }
+                    if (app.getTimeManual()) {
+                        app.deductTime(values.time);
+                        view.showTimeAuto();
+                    } else {
+                        app.resetTime();
+                    }
+                });
+            }).catch(function(error)
+            {
+                console.error('Submitting the time form failed:', error);
+            });
         });
         return this;
     };
@@ -397,15 +416,22 @@ const ListenerIndexModule = (function()
     Index.prototype._registerTimeClearListener = function()
     {
         var app = this.getApp();
+        var self = this;
         var view = this.getView();
         $('#clearTimeButton').off('click').on('click', function()
         {
-            if (app.getTimeManual()) {
-                view.showTimeAuto();
-                app.setTimeManual(false);
-            } else {
-                app.resetTime(true);
-            }
+            self.rpc('getTimeManual').then(function(timeManual)
+            {
+                if (timeManual) {
+                    view.showTimeAuto();
+                    self.send('setTimeManual', {manual: false});
+                } else {
+                    app.resetTime(true);
+                }
+            }).catch(function(error)
+            {
+                console.error('Clearing the time failed:', error);
+            });
         });
         return this;
     };

@@ -282,35 +282,37 @@ const ViewIndexModule = (function()
     /**
      * Validate the time form
      *
-     * @returns Array Errors
+     * @returns Promise Resolves with an Array of errors
      */
     Index.prototype.validateTimeForm = function()
     {
-        var app = this.getApp();
         $('#loggerForm li.danger').removeClass('danger');
-        var errors = [];
-        if (app.getTimeManual()) {
-            if (!$('#timeManual').val().match(new RegExp(JiraConstants.TIME_REGEX)) || $('#timeManual').val() == '') {
-                $('#timeManual').parent().parent().parent().addClass('danger');
-                errors.push('\''+$('#timeManual').val()+'\' does not appear to be a valid JIRA time phrase');
+        return this.rpc('getTimeManual').then(function(timeManual)
+        {
+            var errors = [];
+            if (timeManual) {
+                if (!$('#timeManual').val().match(new RegExp(JiraConstants.TIME_REGEX)) || $('#timeManual').val() == '') {
+                    $('#timeManual').parent().parent().parent().addClass('danger');
+                    errors.push('\''+$('#timeManual').val()+'\' does not appear to be a valid JIRA time phrase');
+                }
             }
-        }
-        if (!$('#issue').val().match(new RegExp(JiraConstants.ISSUE_KEY_REGEX)) || $('#issue').val() == '') {
-            $('#issue').parent().addClass('danger');
-            errors.push('\''+$('#issue').val()+'\' does not appear to be a valid JIRA issue key');
-        }
+            if (!$('#issue').val().match(new RegExp(JiraConstants.ISSUE_KEY_REGEX)) || $('#issue').val() == '') {
+                $('#issue').parent().addClass('danger');
+                errors.push('\''+$('#issue').val()+'\' does not appear to be a valid JIRA issue key');
+            }
 
-        return errors;
+            return errors;
+        });
     };
 
     /**
      * Get all the values of the form
      *
-     * @returns Object Field name / value pairs
+     * @returns Promise Resolves with an Object of field name / value pairs
      */
     Index.prototype.getTimeFormValues = function()
     {
-        var app = this.getApp();
+        var self = this;
         var values = {};
         $('#loggerForm').find('input, select, textarea').each(function() {
             values[$(this).attr('name')] = $(this).val();
@@ -323,14 +325,25 @@ const ViewIndexModule = (function()
             }
         });
 
-        var roundToNearest = 'min';
-        values.time = (app.getTimeManual() ? $('#timeManual').val() : app.getTimeAutoAsString(roundToNearest));
+        // Read the DOM now so a slow RPC reply can't pick up later edits
+        var manualTime = $('#timeManual').val();
         var summary = $('#summary').text();
         if (summary != '' && summary.indexOf(values.issue) < 0 && summary.indexOf('...') < 0) {
             values.summary = summary;
         }
 
-        return values;
+        var roundToNearest = 'min';
+        return this.rpc('getTimeManual').then(function(timeManual)
+        {
+            if (timeManual) {
+                return manualTime;
+            }
+            return self.rpc('getTimeAutoAsString', {roundToNearest: roundToNearest});
+        }).then(function(time)
+        {
+            values.time = time;
+            return values;
+        });
     };
 
     /**
