@@ -67,7 +67,10 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
   group converts to async RPC separately; the page must keep working (still MV2) after every commit.
   - [x] P2.6a Add `rpcCall(source, type, data)` client to `Rpc.js` (promise; resolves `result`, rejects on `{ok:false}` or a missing receiver) and register an RPC listener in `index.js` (background) with an empty handler map. *Done when:* build + lint pass, node test of the client against the listener, popup still works.
   - [x] P2.6b Add read-only handlers (`getVersion`, `getLoggedTotalAsString`, `getDayGrandTotalAsString`, `getTimeAutoAsString`, `getActivityLogs`, `getIssueSummary`) and convert the matching `View/Index` calls to async RPC.
-  - [ ] P2.6c Add mutator handlers (`setTimeManual`, `resetTime`, `deductTime`, `logTime`, `resetLoggedTotal`, `reconfigure`, `bugRequest`, `alertUser`) and convert `Event/Listener/Index` to RPC; resolve the sync `getTimeManual` reads (`View/Index:279,314`, `Listener/Index:347,387`) here.
+  - [ ] P2.6c *(split — see P2.6c1–3)* Convert `Event/Listener/Index` + remaining `View/Index` App calls to RPC.
+    - [ ] P2.6c1 Fire-and-forget mutators that need no return value: `setTimeManual` (time click, time-logged event), `resetLoggedTotal`, `reconfigure`, `bugRequest`. Add handlers, call via `rpcCall`.
+    - [ ] P2.6c2 `getTimeManual`-dependent logic: add `getTimeManual` handler; make `View.validateTimeForm`, `View.getTimeFormValues` (also uses `getTimeAutoAsString`) and the clear-button handler (`resetTime`, `setTimeManual`) async.
+    - [ ] P2.6c3 Form submit chain: `alertUser`, `logTime` (returns success), then `deductTime`/`resetTime`, as one async sequence.
   - [ ] P2.6d `Reminder.show` uses its own app reference instead of `getAppInstance()` (runs in the background/SW); `closeConfiguration` stays page-side.
   - [ ] P2.6e Delete `getAppInstance`/`getConfigInstance` (Abstract + ChromeExt) and the `globalThis.appInstance`/`configInstance` exports in `index.js`. *Done when:* no `getBackgroundPage` in `src/`.
 - [ ] P2.7 Fix `getURL`, `runtime.reload`, `management`, `mailto:`, `sendMessage` `.catch()`.
