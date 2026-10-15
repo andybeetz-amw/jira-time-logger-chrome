@@ -73,7 +73,9 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
     - [x] P2.6c3 Form submit chain: `alertUser`, `logTime` (returns success), then `deductTime`/`resetTime`, as one async sequence.
   - [x] P2.6d `Reminder.show` uses its own app reference instead of `getAppInstance()` (runs in the background/SW); `closeConfiguration` stays page-side.
   - [x] P2.6e Delete `getAppInstance`/`getConfigInstance` (Abstract + ChromeExt) and the `globalThis.appInstance`/`configInstance` exports in `index.js`. *Done when:* no `getBackgroundPage` in `src/`.
-- [ ] P2.7 Fix `getURL`, `runtime.reload`, `management`, `mailto:`, `sendMessage` `.catch()`.
+- [ ] P2.7 *(split — see P2.7a–b)* Fix `getURL`, `runtime.reload`, `management`, `mailto:`, `sendMessage` `.catch()`.
+  - [ ] P2.7a `chrome.extension.getURL` → `runtime.getURL` (also wrap `config.html` and the notification icon); `mailto:` opened page-side (popup) instead of `tabs.create`; `.catch()` on the `dispatchEvent` `sendMessage`; confirm no `chrome.management` use (`fatal()` is already a no-op).
+  - [ ] P2.7b Drop `chrome.runtime.reload()`: config change must re-init the background app in place (the background only sees new config via that reload today). May need to wait for P4 (alarms) — decide then.
 - [ ] P2.8 Flip `manifest.json` to MV3 (version 4.0.0 deferred to P7).
 
 ### P3 — Transport (one cutover; split only into prep commits + one cutover commit)
