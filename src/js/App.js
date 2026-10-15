@@ -344,15 +344,16 @@ const AppModule = (function()
      */
     App.prototype.start = function()
     {
-        // Also called after a config change, which must not add a second stopwatch listener
-        if (this._started) {
-            return;
-        }
-
         // See if config needs setting
         if (!this._testConfig()) {
             this.alertUser('Connection to JIRA failed, please check your settings are correct then try again');
             this.reconfigure();
+            return;
+        }
+
+        // Also called after a config change: the test above is repeated, but a second
+        // stopwatch listener must not be added
+        if (this._started) {
             return;
         }
         this._started = true;
