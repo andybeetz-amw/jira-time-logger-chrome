@@ -7,15 +7,12 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'jquery',
-    'Config',
-    'JiraConstants'
-], function(
-    $,
-    config,
-    JiraConstants
-) {
+import $ from 'jquery';
+import config from '../Config.js';
+import JiraConstants from '../JiraConstants.js';
+
+const ViewConfigModule = (function()
+{
 
     /**
      * Config class
@@ -126,4 +123,6 @@ define([
     };
 
     return new Config();
-});
+})();
+
+export default ViewConfigModule;

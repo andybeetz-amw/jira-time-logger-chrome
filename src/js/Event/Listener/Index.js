@@ -7,21 +7,15 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'Event/Listener/Abstract',
-    'jquery',
-    'Container/Factory',
-    'AppConstants',
-    'View/Index',
-    'ActivityLog'
-], function(
-    Abstract,
-    $,
-    containerFactory,
-    AppConstants,
-    view,
-    AL
-) {
+import Abstract from './Abstract.js';
+import $ from 'jquery';
+import containerFactory from '../../Container/Factory.js';
+import AppConstants from '../../AppConstants.js';
+import view from '../../View/Index.js';
+import AL from '../../ActivityLog.js';
+
+const ListenerIndexModule = (function()
+{
 
     /**
      * Index class
@@ -482,4 +476,6 @@ define([
     };
 
     return new Index();
-});
+})();
+
+export default ListenerIndexModule;

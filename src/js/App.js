@@ -8,31 +8,20 @@
  * @copyright Aaron Baker 2013
  */
 
-define([
-    'AppConstants',
-    'Container/Factory',
-    'Logger',
-    'Config',
-    'Event/Dispatcher/Index',
-    'Jira',
-    'JiraConstants',
-    'Stopwatch',
-    'ActivityLog',
-    'StopwatchTime',
-    'Reminder'
-], function(
-    Constants,
-    containerFactory,
-    logger,
-    config,
-    eventDispatcher,
-    jira,
-    JiraConstants,
-    stopwatch,
-    ActivityLog,
-    StopwatchTime,
-    reminder
-) {
+import Constants from './AppConstants.js';
+import containerFactory from './Container/Factory.js';
+import logger from './Logger.js';
+import config from './Config.js';
+import eventDispatcher from './Event/Dispatcher/Index.js';
+import jira from './Jira.js';
+import JiraConstants from './JiraConstants.js';
+import stopwatch from './Stopwatch.js';
+import ActivityLog from './ActivityLog.js';
+import StopwatchTime from './StopwatchTime.js';
+import reminder from './Reminder.js';
+
+const AppModule = (function()
+{
 
     /**
      * App class
@@ -686,4 +675,6 @@ define([
     };
 
     return App.getInstance();
-});
+})();
+
+export default AppModule;

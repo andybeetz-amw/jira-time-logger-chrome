@@ -7,19 +7,14 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'jquery',
-    'Container/Factory',
-    'ActivityLog',
-    'JiraConstants',
-    'Config'
-], function(
-    $,
-    containerFactory,
-    AL,
-    JiraConstants,
-    config
-) {
+import $ from 'jquery';
+import containerFactory from '../Container/Factory.js';
+import AL from '../ActivityLog.js';
+import JiraConstants from '../JiraConstants.js';
+import config from '../Config.js';
+
+const ViewIndexModule = (function()
+{
 
     /**
      * Index class
@@ -463,4 +458,6 @@ define([
     };
 
     return new Index();
-});
+})();
+
+export default ViewIndexModule;

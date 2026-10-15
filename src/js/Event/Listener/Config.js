@@ -7,17 +7,14 @@
  * @copyright Aaron Baker 2014
  */
 
-define([
-    'jquery',
-    'Config',
-    'View/Config',
-    'Container/Factory'
-], function(
-    $,
-    config,
-    view,
-    containerFactory
-) {
+import $ from 'jquery';
+import config from '../../Config.js';
+import defaultView from '../../View/Config.js';
+import containerFactory from '../../Container/Factory.js';
+
+const ListenerConfigModule = (function()
+{
+    var view = defaultView;
 
     /**
      * Config class
@@ -122,4 +119,6 @@ define([
     };
 
     return new Config();
-});
+})();
+
+export default ListenerConfigModule;
