@@ -58,7 +58,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
   - [x] P2.1f ESM-convert `Config`, `Reminder`, `Jira` (`json!` → JSON import).
   - [x] P2.1g ESM-convert `View/Config`, `View/Index`, `Event/Listener/Config`, `Event/Listener/Index`, `App`.
   - [x] P2.1h ESM-convert the 3 entry points; remove the AMD bridge plugin from `build.mjs`. *Done when:* no `define(` or `require(` left in `src/js` outside RequireJS itself and its plugins.
-- [ ] P2.2 Replace `Container/Factory.js` / `Storage/Factory.js` dynamic requires with static maps.
+- [x] P2.2 Replace `Container/Factory.js` / `Storage/Factory.js` dynamic requires with static maps.
 - [ ] P2.3 Delete RequireJS + plugins; `config.json` via esbuild import.
 - [ ] P2.4 Add `sw.js` with synchronous top-level listeners (not yet wired to manifest).
 - [ ] P2.5 Typed RPC envelope + always-`sendResponse` handler.
@@ -121,3 +121,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-14 — P2.1f — 76eced6 — Config, Reminder, Jira now ESM; config.json imported directly; build + lint pass (new warning: Config's StorageAbstract import is unused, was an unreported unused AMD param); verified loaded by user
 - 2026-10-15 — P2.1g — cfe8a9e — View/Config+Index, Event/Listener/Config+Index, App now ESM; Listener/Config's reassigned `view` import became a local var (esbuild forbids assigning imports); build + lint pass (0 errors, 6 warnings); verified loaded by user
 - 2026-10-15 — P2.1h — 458819b — index/ui-index/ui-config now ESM; AMD bridge plugin removed from build.mjs, replaced by a jquery alias + wrapper plugin; build + lint pass (0 errors, 6 warnings); verified loaded by user
+- 2026-10-15 — P2.2 — b0a583e — no code change needed beyond removing stale comments: static Factory.TYPES maps landed in P2.1d; grep finds no dynamic require( in src/js outside RequireJS; build + lint pass
