@@ -279,17 +279,8 @@ const ConfigModule = (function()
             this.set(key, settings[name], section);
         }
 
-        var self = this;
-        this.save(true, function(success)
-        {
-            // Only once stored: the background re-reads the config from storage
-            if (success) {
-                self.getContainer().configurationChanged();
-            }
-            if (callback) {
-                callback(success);
-            }
-        });
+        this.save(true, callback);
+        this.getContainer().configurationChanged();
     };
 
     /*
