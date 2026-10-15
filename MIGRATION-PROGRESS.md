@@ -60,7 +60,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
   - [x] P2.1h ESM-convert the 3 entry points; remove the AMD bridge plugin from `build.mjs`. *Done when:* no `define(` or `require(` left in `src/js` outside RequireJS itself and its plugins.
 - [x] P2.2 Replace `Container/Factory.js` / `Storage/Factory.js` dynamic requires with static maps.
 - [x] P2.3 Delete RequireJS + plugins; `config.json` via esbuild import.
-- [ ] P2.4 Add `sw.js` with synchronous top-level listeners (not yet wired to manifest).
+- [x] P2.4 Add `sw.js` with synchronous top-level listeners (not yet wired to manifest).
 - [ ] P2.5 Typed RPC envelope + always-`sendResponse` handler.
 - [ ] P2.6 Replace `getBackgroundPage()` calls in `Container/ChromeExt.js` with RPC.
 - [ ] P2.7 Fix `getURL`, `runtime.reload`, `management`, `mailto:`, `sendMessage` `.catch()`.
@@ -123,3 +123,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-15 — P2.1h — 458819b — index/ui-index/ui-config now ESM; AMD bridge plugin removed from build.mjs, replaced by a jquery alias + wrapper plugin; build + lint pass (0 errors, 6 warnings); verified loaded by user
 - 2026-10-15 — P2.2 — b0a583e — no code change needed beyond removing stale comments: static Factory.TYPES maps landed in P2.1d; grep finds no dynamic require( in src/js outside RequireJS; build + lint pass
 - 2026-10-15 — P2.3 — 3a6d88f — removed require.js, require-setup.js, require-plugin/; eslint AMD globals/ignores dropped; config.json import was already done in P2.1f; tests/ harness still references RequireJS (deleted in P6.1); build + lint pass; verified loaded by user
+- 2026-10-15 — P2.4 — c268cb1 — src/js/background/sw.js with 6 top-level placeholder listeners, added as 4th esbuild entry (dist/js/background/sw.js, IIFE); not in manifest; build + lint pass; ran bundle under a stubbed chrome in node: all 6 listeners register synchronously; extension behaviour unchanged
