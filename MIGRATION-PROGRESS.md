@@ -61,7 +61,7 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - [x] P2.2 Replace `Container/Factory.js` / `Storage/Factory.js` dynamic requires with static maps.
 - [x] P2.3 Delete RequireJS + plugins; `config.json` via esbuild import.
 - [x] P2.4 Add `sw.js` with synchronous top-level listeners (not yet wired to manifest).
-- [ ] P2.5 Typed RPC envelope + always-`sendResponse` handler.
+- [x] P2.5 Typed RPC envelope + always-`sendResponse` handler.
 - [ ] P2.6 Replace `getBackgroundPage()` calls in `Container/ChromeExt.js` with RPC.
 - [ ] P2.7 Fix `getURL`, `runtime.reload`, `management`, `mailto:`, `sendMessage` `.catch()`.
 - [ ] P2.8 Flip `manifest.json` to MV3 (version 4.0.0 deferred to P7).
@@ -124,3 +124,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-15 — P2.2 — b0a583e — no code change needed beyond removing stale comments: static Factory.TYPES maps landed in P2.1d; grep finds no dynamic require( in src/js outside RequireJS; build + lint pass
 - 2026-10-15 — P2.3 — 3a6d88f — removed require.js, require-setup.js, require-plugin/; eslint AMD globals/ignores dropped; config.json import was already done in P2.1f; tests/ harness still references RequireJS (deleted in P6.1); build + lint pass; verified loaded by user
 - 2026-10-15 — P2.4 — c268cb1 — src/js/background/sw.js with 6 top-level placeholder listeners, added as 4th esbuild entry (dist/js/background/sw.js, IIFE); not in manifest; build + lint pass; ran bundle under a stubbed chrome in node: all 6 listeners register synchronously; extension behaviour unchanged
+- 2026-10-15 — P2.5 — 0573e82 — src/js/Rpc.js (envelope {id,source,type,data}, response {ok,result|error}, createMessageListener that always responds); sw.js uses it with empty handlers; ChromeExt.setupMessageListener fixed (sendResponse, no return true, Event(request.type)) — should remove the 'asynchronous response' console error noted in P2.1c; dispatcher still sends the old {type,data} shape, migrated with P2.6; node-tested Rpc (sync/async/throw/reject/unknown/non-envelope); build + lint pass; awaiting user load check
