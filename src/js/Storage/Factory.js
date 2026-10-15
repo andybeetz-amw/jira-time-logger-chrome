@@ -58,7 +58,7 @@ const FactoryModule = (function()
     Factory.DEFAULT_TYPE = 'ChromeExt';
 
     /**
-     * Available implementations by type (static map; P2.2 formalises this)
+     * Available implementations by type
      */
     Factory.TYPES = {ChromeExt: ChromeExt};
 
