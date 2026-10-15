@@ -73,9 +73,9 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
     - [x] P2.6c3 Form submit chain: `alertUser`, `logTime` (returns success), then `deductTime`/`resetTime`, as one async sequence.
   - [x] P2.6d `Reminder.show` uses its own app reference instead of `getAppInstance()` (runs in the background/SW); `closeConfiguration` stays page-side.
   - [x] P2.6e Delete `getAppInstance`/`getConfigInstance` (Abstract + ChromeExt) and the `globalThis.appInstance`/`configInstance` exports in `index.js`. *Done when:* no `getBackgroundPage` in `src/`.
-- [ ] P2.7 *(split — see P2.7a–b)* Fix `getURL`, `runtime.reload`, `management`, `mailto:`, `sendMessage` `.catch()`.
+- [x] P2.7 *(split — see P2.7a–b)* Fix `getURL`, `runtime.reload`, `management`, `mailto:`, `sendMessage` `.catch()`.
   - [x] P2.7a `chrome.extension.getURL` → `runtime.getURL` (also wrap `config.html` and the notification icon); `mailto:` opened page-side (popup) instead of `tabs.create`; `.catch()` on the `dispatchEvent` `sendMessage`; confirm no `chrome.management` use (`fatal()` is already a no-op).
-  - [ ] P2.7b Drop `chrome.runtime.reload()`: config change must re-init the background app in place (the background only sees new config via that reload today). May need to wait for P4 (alarms) — decide then.
+  - [x] P2.7b Drop `chrome.runtime.reload()`: `configurationChanged` sends a `configChanged` RPC; the background re-reads config and `App.start()` re-tests the connection (idempotent for the stopwatch listener).
 - [ ] P2.8 Flip `manifest.json` to MV3 (version 4.0.0 deferred to P7).
 
 ### P3 — Transport (one cutover; split only into prep commits + one cutover commit)
@@ -148,3 +148,4 @@ steps small enough to be one commit each. Work top to bottom; do not skip ahead.
 - 2026-10-15 — P2.6e — 85ba9c4 — removed getAppInstance/getConfigInstance, unused getApp() helpers + containerFactory imports, globalThis exports; grep finds no getBackgroundPage/appInstance/configInstance in src/ (only jquery.min); P2.6 complete; build + lint pass; verified loaded by user
 - 2026-10-15 — P2.7 split — 4e0a200 — P2.7 split into a/b: runtime.reload is how the background picks up new config, so removing it needs in-place re-init (P2.7b)
 - 2026-10-15 — P2.7a — 626dcc6 — chrome.extension.getURL → runtime.getURL (config.html, notification icon); App.bugRequest → getBugReportUrl, popup opens mailto via window.open (tabs.create rejects mailto:); dispatchEvent sendMessage promise .catch()ed; no chrome.management use exists; build + lint pass; verified loaded by user
+- 2026-10-15 — P2.7b — 3a1696c, 38f43e2 (0e0683f reverted in c94039e) — runtime.reload replaced by `configChanged` RPC → background `config.init('index-reload')` → `app.start()`; start() re-tests the connection every call (alert + config tab on failure) but only registers the stopwatch listener once; stopwatch/logged total now survive a config save (reload used to reset them); build + lint pass; verified by user (unreachable URL alerts, restoring the real URL works). Finding: a bad password is NOT detected on this Jira Cloud site because the browser's `tenant.session.token` cookie authenticates the request ahead of the Basic header; P3.2 `request()` should use `fetch` with `credentials: 'omit'`. P2.7 complete
