@@ -5,7 +5,7 @@ import { cpSync, readFileSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const jsDir = resolve('src/js');
-const entries = ['index', 'ui-index', 'ui-config'];
+const entries = ['index', 'ui-index', 'ui-config', 'background/sw'];
 
 // package.json is "type": "module", so esbuild would treat the vendored jQuery as ESM and find no export.
 // Wrap it so it gets a CommonJS-style `module` (it sets module.exports when present) and a default export.
