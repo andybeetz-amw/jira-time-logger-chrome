@@ -9,7 +9,6 @@
 
 import Abstract from './Abstract.js';
 import $ from 'jquery';
-import containerFactory from '../../Container/Factory.js';
 import AppConstants from '../../AppConstants.js';
 import view from '../../View/Index.js';
 import AL from '../../ActivityLog.js';
@@ -83,16 +82,6 @@ const ListenerIndexModule = (function()
             {
                 console.error(type + ' failed:', error);
             });
-        };
-
-        /**
-         * Get the App instance
-         *
-         * @returns App
-         */
-        this.getApp = function()
-        {
-            return containerFactory.get().getAppInstance();
         };
 
         /**

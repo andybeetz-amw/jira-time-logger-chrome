@@ -70,26 +70,6 @@ const ChromeExtModule = (function()
     ChromeExt.prototype = Object.create(Abstract.prototype);
 
     /**
-     * Get the application instance
-     *
-     * @returns App
-     */
-    ChromeExt.prototype.getAppInstance = function()
-    {
-        return chrome.extension.getBackgroundPage().appInstance;
-    };
-
-    /**
-     * Get the config instance
-     *
-     * @returns Config
-     */
-    ChromeExt.getConfigInstance = function()
-    {
-        return chrome.extension.getBackgroundPage().configInstance;
-    };
-
-    /**
      * Get the application version number
      *
      * @returns String

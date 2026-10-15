@@ -8,7 +8,6 @@
  */
 
 import $ from 'jquery';
-import containerFactory from '../Container/Factory.js';
 import AL from '../ActivityLog.js';
 import JiraConstants from '../JiraConstants.js';
 import config from '../Config.js';
@@ -91,16 +90,6 @@ const ViewIndexModule = (function()
         this.rpc = function(type, data)
         {
             return rpcCall('ui-index', type, data);
-        };
-
-        /**
-         * Get the Application instance
-         *
-         * @returns App
-         */
-        this.getApp = function()
-        {
-            return containerFactory.get().getAppInstance();
         };
 
         /**

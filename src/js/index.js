@@ -7,10 +7,6 @@
  * @copyright Aaron Baker 2014
  */
 
-/*
- * These variables MUST be global (albeit within the extension)
- * so the popup can access them (set on globalThis: the bundle is an IIFE) via chrome.extension.getBackgroundPage().appInstance
- */
 import config from './Config.js';
 import ConfigConstants from './ConfigConstants.js';
 import app from './App.js';
@@ -43,8 +39,6 @@ chrome.runtime.onMessage.addListener(createMessageListener({
 }));
 
 try {
-    globalThis.appInstance = app;
-    globalThis.configInstance = config;
     var forContext = 'index';
     containerFactory.get().registerCustomEventListener(ConfigConstants.EVENT_INITIALISED+'_'+forContext, function()
     {

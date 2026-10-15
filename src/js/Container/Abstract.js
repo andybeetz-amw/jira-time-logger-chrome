@@ -25,26 +25,6 @@ const AbstractModule = (function()
     };
 
     /**
-     * Get the application instance
-     *
-     * @returns App
-     */
-    Abstract.prototype.getAppInstance = function()
-    {
-        throw 'Container/Abstract.getAppInstance must be overridden';
-    };
-
-    /**
-     * Get the config instance
-     *
-     * @returns Config
-     */
-    Abstract.getConfigInstance = function()
-    {
-        throw 'Container/Abstract.getConfigInstance must be overridden';
-    };
-
-    /**
      * Get the application version number
      *
      * @returns String
