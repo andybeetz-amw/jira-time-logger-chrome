@@ -16,6 +16,10 @@ import ConfigConstants from './ConfigConstants.js';
 import app from './App.js';
 import logger from './Logger.js';
 import containerFactory from './Container/Factory.js';
+import {createMessageListener} from './Rpc.js';
+
+// RPC entry point for the popup/config pages; handlers are added per type from P2.6b.
+chrome.runtime.onMessage.addListener(createMessageListener({}));
 
 try {
     globalThis.appInstance = app;

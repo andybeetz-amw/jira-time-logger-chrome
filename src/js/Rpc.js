@@ -62,3 +62,30 @@ export function createMessageListener(handlers)
         return true;
     };
 }
+
+/**
+ * Send an envelope to the other side (background/service worker) and resolve with the handler's result.
+ *
+ * Rejects if there is no receiver (e.g. the service worker could not start), or the handler answered
+ * {ok: false}. Uses the callback form so it behaves the same under MV2 and MV3.
+ *
+ * @param String source
+ * @param String type
+ * @param * data
+ * @returns Promise
+ */
+export function rpcCall(source, type, data)
+{
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage(createEnvelope(source, type, data), (response) => {
+            const lastError = chrome.runtime.lastError;
+            if (lastError) {
+                reject(new Error(lastError.message));
+            } else if (!response || !response.ok) {
+                reject(new Error((response && response.error) || 'No response'));
+            } else {
+                resolve(response.result);
+            }
+        });
+    });
+}
