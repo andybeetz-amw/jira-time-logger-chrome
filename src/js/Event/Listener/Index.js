@@ -349,7 +349,7 @@ const ListenerIndexModule = (function()
      */
     Index.prototype._registerFormListener = function()
     {
-        var app = this.getApp();
+        var self = this;
         var view = this.getView();
         $('#loggerForm').off('submit').on('submit', function(e)
         {
@@ -360,26 +360,31 @@ const ListenerIndexModule = (function()
             view.validateTimeForm().then(function(errors)
             {
                 if (errors.length) {
-                    app.alertUser(errors.join('\n'));
-                    return;
+                    return self.rpc('alertUser', {message: errors.join('\n')});
                 }
 
                 // No errors, submit
-                return view.getTimeFormValues().then(function(values)
+                // The manual flag must be read before logging: the time-logged event handler resets it.
+                return Promise.all([self.rpc('getTimeManual'), view.getTimeFormValues()]).then(function(results)
                 {
-                    var success = app.logTime(
-                        values.time, values.issue.toUpperCase(), values.description, values.summary
-                    );
-                    if (!success) {
-                        return;
-                    }
-
-                    if (app.getTimeManual()) {
-                        app.deductTime(values.time);
-                        view.showTimeAuto();
-                    } else {
-                        app.resetTime();
-                    }
+                    var timeManual = results[0];
+                    var values = results[1];
+                    return self.rpc('logTime', {
+                        time: values.time,
+                        issue: values.issue.toUpperCase(),
+                        description: values.description,
+                        summary: values.summary
+                    }).then(function(success)
+                    {
+                        if (!success) {
+                            return;
+                        }
+                        if (timeManual) {
+                            view.showTimeAuto();
+                            return self.rpc('deductTime', {time: values.time});
+                        }
+                        return self.rpc('resetTime', {log: false});
+                    });
                 });
             }).catch(function(error)
             {
@@ -415,7 +420,6 @@ const ListenerIndexModule = (function()
      */
     Index.prototype._registerTimeClearListener = function()
     {
-        var app = this.getApp();
         var self = this;
         var view = this.getView();
         $('#clearTimeButton').off('click').on('click', function()
@@ -426,7 +430,7 @@ const ListenerIndexModule = (function()
                     view.showTimeAuto();
                     self.send('setTimeManual', {manual: false});
                 } else {
-                    app.resetTime(true);
+                    self.send('resetTime', {log: true});
                 }
             }).catch(function(error)
             {

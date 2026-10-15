@@ -23,6 +23,10 @@ import {createMessageListener} from './Rpc.js';
 chrome.runtime.onMessage.addListener(createMessageListener({
     getVersion: () => app.getVersion(),
     getTimeManual: () => app.getTimeManual(),
+    alertUser: (data) => { app.alertUser(data.message); },
+    logTime: (data) => app.logTime(data.time, data.issue, data.description, data.summary),
+    deductTime: (data) => { app.deductTime(data.time); },
+    resetTime: (data) => { app.resetTime(data.log); },
     setTimeManual: (data) => { app.setTimeManual(data.manual); },
     resetLoggedTotal: (data) => { app.resetLoggedTotal(data.log); },
     reconfigure: () => { app.reconfigure(); },
